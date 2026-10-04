@@ -98,3 +98,38 @@ with open(f"results/baseline_{SPLIT}.json", "w") as f:
 evalset[["id", "label12", "pred_label12", "label50", "pred_label50"]].to_csv(
     f"data/processed/baseline_pred_{SPLIT}.csv", index=False)
 print(f"\nSaved results/baseline_{SPLIT}.json")
+
+
+# 5. Seen or new? Does the exact answer (ignoring case and punctuation) appear in the training data
+def normalise(text):
+    return text.astype(str).str.lower().str.replace(r"[\W_]", " ", regex=True).str.strip()
+
+
+seen = normalise(evalset['text']).isin(set(normalise(train["text"])))
+seen_vs_new = {"seen_share": round(seen.mean(), 3)}
+
+print(
+    f"\n Seen in training, word for word: {seen.sum()} of {len(evalset)} answers ({seen.mean():.0%})")
+
+for scheme, n_cat in (("label12", 12), ("label50", 50)):
+    right = evalset[scheme] == evalset[f"pred_{scheme}"]
+    seen_vs_new[f"{n_cat}_cat"] = {"seen": round(right[seen].mean(), 3),
+                                   "new": round(right[~seen].mean(), 3)}
+    print(f"   {n_cat} categories, classifier accuracy: seen {right[seen].mean():.1%} | "
+          f"new {right[~seen].mean():.1%} ({(-seen).sum()} new answers)")
+
+
+# Add the split to the saved results, and a 'seen' column to the saved predictions
+with open(f"results/baseline_{SPLIT}.json") as f:
+    saved = json.load(f)
+
+saved["seen_vs_new"] = seen_vs_new
+with open(f"results/baseline_{SPLIT}.json", "w") as f:
+    json.dump(saved, f, indent=2)
+
+evalset["seen"] = seen
+
+evalset[["id", "seen", "label12", "pred_label12", "label50",
+         "pred_label50"]].to_csv(
+             f"data/processed/baseline_pred_{SPLIT}.csv", index=False
+)

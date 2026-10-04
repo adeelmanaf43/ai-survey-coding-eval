@@ -13,3 +13,5 @@
 | D-008 | 2026-10-04 | Checked the 50→12 grouping in the W25 data: Asylum→Immigration, Election outcome→Other, Transport→Austerity/spending | The BES PDF table leaves these three out, and 3 label spellings differ from the data; the data wins |
 
 | D-09 | 2026-10-04 | Baselines: "always the most common category" and TF-IDF (letter chunks) + logistic regression with default settings, trained on W23–W24 with evaluation respondents left out | Gives the AI a fair, simple bar to beat; dev set only, test untouched |
+
+| D-010 | 2026-10-04 | Report accuracy separately for answers seen word for word in training vs new answers | Most answers repeat phrases the classifier has memorised; the split shows where its accuracy comes from |
