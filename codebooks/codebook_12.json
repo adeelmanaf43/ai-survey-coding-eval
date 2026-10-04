@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Europe",
+    "definition": "Brexit, the EU or the EU referendum, including the effects of Brexit.",
+    "examples": ["brexit", "leaving the EU"]
+  },
+  {
+    "name": "Immigration",
+    "definition": "Immigration, migrants and border control, plus asylum seekers and refugees.",
+    "examples": ["immigration", "too many asylum seekers"]
+  },
+  {
+    "name": "Economy",
+    "definition": "The economy, jobs, taxes, public debt, inflation, cost of living or personal finances.",
+    "examples": ["the economy", "cost of living"]
+  },
+  {
+    "name": "Health",
+    "definition": "The NHS and health care, Covid-19, and the economic effects of Covid.",
+    "examples": ["the NHS", "covid"]
+  },
+  {
+    "name": "Terrorism",
+    "definition": "Terrorism and extremism.",
+    "examples": ["terrorism"]
+  },
+  {
+    "name": "Inequality",
+    "definition": "Poverty, inequality between rich and poor, housing and homelessness.",
+    "examples": ["poverty", "affordable housing"]
+  },
+  {
+    "name": "Environment",
+    "definition": "Climate change, pollution, nature. One-word 'energy', 'food' or 'fuel' goes here.",
+    "examples": ["climate change", "the environment"]
+  },
+  {
+    "name": "Austerity/spending",
+    "definition": "Public spending and services: education, welfare and benefits, cuts, social care, pensions.",
+    "examples": ["cuts to public services", "schools"]
+  },
+  {
+    "name": "Negativity",
+    "definition": "Negative about politics or politicians in general, or about a named party or politician; a divided society.",
+    "examples": ["lying politicians", "get the tories out"]
+  },
+  {
+    "name": "Other lib-auth",
+    "definition": "Crime, morals, national identity, racism, foreign affairs, war, defence, gender and family, social values.",
+    "examples": ["knife crime", "the war in ukraine"]
+  },
+  {
+    "name": "Other left-right",
+    "definition": "Left- or right-wing economic views, e.g. against capitalism and big business, or against socialism and red tape.",
+    "examples": ["greedy corporations", "too much red tape"]
+  },
+  {
+    "name": "Other",
+    "definition": "Constitution, devolution, Scottish independence, trade, emergencies, elections, transport, any other political issue.",
+    "examples": ["scottish independence", "potholes"]
+  },
+  {
+    "name": "Uncoded",
+    "definition": "Unclear, too vague, not about politics or society, or impossible to place in one category.",
+    "examples": ["everything", "no idea"]
+  }
+]
