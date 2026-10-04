@@ -1,67 +1,253 @@
 [
   {
-    "name": "Europe",
-    "definition": "Brexit, the EU or the EU referendum, including the effects of Brexit.",
-    "examples": ["brexit", "leaving the EU"]
-  },
-  {
-    "name": "Immigration",
-    "definition": "Immigration, migrants and border control, plus asylum seekers and refugees.",
-    "examples": ["immigration", "too many asylum seekers"]
-  },
-  {
-    "name": "Economy",
-    "definition": "The economy, jobs, taxes, public debt, inflation, cost of living or personal finances.",
-    "examples": ["the economy", "cost of living"]
-  },
-  {
     "name": "Health",
-    "definition": "The NHS and health care, Covid-19, and the economic effects of Covid.",
-    "examples": ["the NHS", "covid"]
+    "definition": "The NHS and health care, including mental health, e.g. funding, waiting times, staff. Covid-19 has its own codes.",
+    "examples": ["the NHS", "mental health services"]
+  },
+  {
+    "name": "Education",
+    "definition": "Schools, universities, tuition fees, teachers, standards of education and skills shortages.",
+    "examples": ["education", "underfunded schools"]
+  },
+  {
+    "name": "Election outcome",
+    "definition": "A recent or upcoming election or its result, mentioned neutrally or positively, e.g. who should win.",
+    "examples": ["the next general election", "electing the right government"]
+  },
+  {
+    "name": "Pol-neg",
+    "definition": "Negative about politics, politicians or 'the government' in general (nobody named): corruption, decline of democracy, weak leadership, media bias.",
+    "examples": ["lying politicians", "corruption in government"]
+  },
+  {
+    "name": "Partisan-neg",
+    "definition": "Negative about a named party or politician (even about corruption); a name alone counts. Nobody named: use Pol-neg.",
+    "examples": ["get the tories out", "rishi sunak"]
+  },
+  {
+    "name": "Societal divides",
+    "definition": "Division or lack of unity in society in general, including regional divides, not specifically economic or cultural.",
+    "examples": ["a divided country", "lack of unity"]
+  },
+  {
+    "name": "Morals",
+    "definition": "Declining morals, ethics or religious values; greed and selfishness; lack of respect for each other.",
+    "examples": ["falling moral standards", "greed and selfishness"]
+  },
+  {
+    "name": "Nat ident, goals-loss",
+    "definition": "Worry about cultural change or losing British identity, without mentioning immigration; non-Covid conspiracy theories.",
+    "examples": [
+      "losing our british identity",
+      "a global elite controlling everything"
+    ]
+  },
+  {
+    "name": "Racism/discrimination",
+    "definition": "Racism, bigotry, prejudice or discrimination against groups such as minorities, disabled people or immigrants. Class-based unfairness is Inequality.",
+    "examples": ["racism", "discrimination against minorities"]
+  },
+  {
+    "name": "Welfare",
+    "definition": "The benefits system or welfare state, whether supportive or critical.",
+    "examples": ["the benefits system", "too many people on benefits"]
   },
   {
     "name": "Terrorism",
-    "definition": "Terrorism and extremism.",
-    "examples": ["terrorism"]
+    "definition": "Terrorism, extremism, terrorist groups or specific attacks.",
+    "examples": ["terrorism", "extremist attacks"]
+  },
+  {
+    "name": "Immigration",
+    "definition": "Immigration, including illegal immigration and overpopulation; migrants, border control. Answers naming asylum seekers or refugees go to Asylum.",
+    "examples": ["immigration", "illegal immigration"]
+  },
+  {
+    "name": "Asylum",
+    "definition": "Asylum seekers or refugees, whether for or against, even if immigration is also mentioned.",
+    "examples": ["asylum seekers", "too many refugees"]
+  },
+  {
+    "name": "Crime",
+    "definition": "Crime, anti-social behaviour, specific crimes, law and order, policing, the legal system, drugs and drug policy.",
+    "examples": ["knife crime", "law and order"]
+  },
+  {
+    "name": "Europe",
+    "definition": "Brexit and its effects, the EU, or Britain's relationship with Europe. Blaming politicians over Brexit is Pol-neg.",
+    "examples": ["brexit", "the effects of leaving the EU"]
+  },
+  {
+    "name": "Constitutional",
+    "definition": "Constitution, electoral reform, monarchy, Welsh independence, Northern Ireland's status. Not devolution or Scottish independence.",
+    "examples": ["proportional representation", "abolish the monarchy"]
+  },
+  {
+    "name": "International trade",
+    "definition": "Trade, trade deals, imports, or self-sufficiency: depending on other countries vs producing our own goods and energy.",
+    "examples": ["trade deals", "producing our own energy"]
+  },
+  {
+    "name": "Devolution",
+    "definition": "Devolution of powers to Scotland, Wales, Northern Ireland or the regions.",
+    "examples": ["devolution", "more powers for the regions"]
+  },
+  {
+    "name": "Scot-ind",
+    "definition": "Scottish independence, another independence referendum, or keeping the union together.",
+    "examples": ["scottish independence", "saving the union"]
+  },
+  {
+    "name": "Foreign affairs",
+    "definition": "Other foreign matters: relations with other countries, foreign aid, world leaders. Just 'Ukraine' or 'Putin' goes here.",
+    "examples": ["foreign aid", "putin"]
+  },
+  {
+    "name": "War",
+    "definition": "War, military conflict, invasion or the threat of war, e.g. the war in Ukraine; also calls for peace.",
+    "examples": ["the war in ukraine", "threat of nuclear war"]
+  },
+  {
+    "name": "Defence",
+    "definition": "Defence, armed forces, military spending, national or cyber security, or energy and food security.",
+    "examples": ["defence spending", "energy security"]
+  },
+  {
+    "name": "Foreign emergency",
+    "definition": "An emergency abroad that is not a war, such as a natural disaster or genocide.",
+    "examples": ["natural disasters abroad", "humanitarian crises overseas"]
+  },
+  {
+    "name": "Domestic emergency",
+    "definition": "An emergency in Britain, such as floods, storms or a disaster, or fear of blackouts.",
+    "examples": ["flooding", "power cuts this winter"]
+  },
+  {
+    "name": "Economy-general",
+    "definition": "The economy in general: recession, growth, financial stability, strikes, supply chains. Specific economic issues have their own codes.",
+    "examples": ["the economy", "recession"]
+  },
+  {
+    "name": "Economy-personal",
+    "definition": "The respondent's own or their family's finances, bills or debts.",
+    "examples": ["paying my bills", "my family's finances"]
+  },
+  {
+    "name": "Unemployment",
+    "definition": "Jobs, employment and unemployment, working conditions such as zero-hours contracts, and labour shortages.",
+    "examples": ["unemployment", "zero hours contracts"]
+  },
+  {
+    "name": "Taxation",
+    "definition": "Taxes in general, high taxes, specific taxes, or tax avoidance.",
+    "examples": ["high taxes", "tax avoidance"]
+  },
+  {
+    "name": "Debt/deficit",
+    "definition": "Public debt, the deficit, government overspending or waste. 'Debt' on its own goes here.",
+    "examples": ["national debt", "government overspending"]
+  },
+  {
+    "name": "Inflation",
+    "definition": "Inflation itself, often together with interest rates.",
+    "examples": ["inflation", "inflation and interest rates"]
+  },
+  {
+    "name": "Living costs",
+    "definition": "The cost of living: prices of food, energy and essentials, or wages not keeping up.",
+    "examples": ["cost of living", "energy bills"]
+  },
+  {
+    "name": "Poverty",
+    "definition": "Poverty, food banks, people struggling to get by; homelessness when clearly linked to poverty.",
+    "examples": ["poverty", "food banks"]
+  },
+  {
+    "name": "Austerity",
+    "definition": "Austerity, cuts, or public services and their funding in general (not one specific service like the NHS or schools).",
+    "examples": ["austerity", "the state of public services"]
   },
   {
     "name": "Inequality",
-    "definition": "Poverty, inequality between rich and poor, housing and homelessness.",
-    "examples": ["poverty", "affordable housing"]
+    "definition": "Equality and fairness: the gap between rich and poor, class discrimination, regional or generational inequality.",
+    "examples": [
+      "the gap between rich and poor",
+      "unfairness between social classes"
+    ]
+  },
+  {
+    "name": "Housing",
+    "definition": "Housing and its costs: house prices, rents, affordable or social housing, homelessness.",
+    "examples": ["lack of affordable housing", "high rents"]
+  },
+  {
+    "name": "Social care",
+    "definition": "Social care, care for the elderly or disabled, carers; the word 'childcare' on its own.",
+    "examples": ["social care", "care for the elderly"]
+  },
+  {
+    "name": "Pensions/ageing",
+    "definition": "Pensions and pension issues, or the costs of an ageing population.",
+    "examples": ["pensions", "an ageing population"]
+  },
+  {
+    "name": "Transport/infrastructure",
+    "definition": "Transport and infrastructure: roads, potholes, railways, buses, energy generation, projects like HS2.",
+    "examples": ["potholes", "HS2"]
   },
   {
     "name": "Environment",
-    "definition": "Climate change, pollution, nature. One-word 'energy', 'food' or 'fuel' goes here.",
-    "examples": ["climate change", "the environment"]
+    "definition": "Climate change (including denial), pollution, countryside, fracking. One-word 'energy', 'food' or 'fuel' goes here.",
+    "examples": ["climate change", "sewage in rivers"]
   },
   {
-    "name": "Austerity/spending",
-    "definition": "Public spending and services: education, welfare and benefits, cuts, social care, pensions.",
-    "examples": ["cuts to public services", "schools"]
+    "name": "Pol values-auth",
+    "definition": "Authoritarian or traditional views not covered elsewhere: political correctness, 'woke' culture, discipline, respect for authority.",
+    "examples": ["political correctness", "woke culture"]
   },
   {
-    "name": "Negativity",
-    "definition": "Negative about politics or politicians in general, or about a named party or politician; a divided society.",
-    "examples": ["lying politicians", "get the tories out"]
+    "name": "Pol values-liberal",
+    "definition": "Liberal views not covered elsewhere: civil liberties, free speech, human rights, opposing nationalism or the far right.",
+    "examples": ["human rights", "the rise of the far right"]
   },
   {
-    "name": "Other lib-auth",
-    "definition": "Crime, morals, national identity, racism, foreign affairs, war, defence, gender and family, social values.",
-    "examples": ["knife crime", "the war in ukraine"]
+    "name": "Pol values-right",
+    "definition": "Right-wing economic views: against socialism, the left, trade unions, red tape or big government.",
+    "examples": ["too much red tape", "the hard left"]
   },
   {
-    "name": "Other left-right",
-    "definition": "Left- or right-wing economic views, e.g. against capitalism and big business, or against socialism and red tape.",
-    "examples": ["greedy corporations", "too much red tape"]
+    "name": "Pol values-left",
+    "definition": "Left-wing economic views: against capitalism, big business, privatisation or 'too right-wing' politics; for workers' rights and redistribution.",
+    "examples": ["greedy corporations", "a government that is too right wing"]
   },
   {
     "name": "Other",
-    "definition": "Constitution, devolution, Scottish independence, trade, emergencies, elections, transport, any other political issue.",
-    "examples": ["scottish independence", "potholes"]
+    "definition": "A clear political issue or policy area that fits no other category.",
+    "examples": ["global overpopulation", "social media"]
   },
   {
     "name": "Uncoded",
     "definition": "Unclear, too vague, not about politics or society, or impossible to place in one category.",
     "examples": ["everything", "no idea"]
+  },
+  {
+    "name": "Referendum unspecified",
+    "definition": "A referendum, without saying which one.",
+    "examples": ["the referendum"]
+  },
+  {
+    "name": "Coronavirus",
+    "definition": "Covid-19, the pandemic, lockdowns or vaccines, including Covid conspiracy theories, except its effects on the economy.",
+    "examples": ["covid", "the pandemic"]
+  },
+  {
+    "name": "Covid-economy",
+    "definition": "The economic impact of Covid-19 or of the policy response to it.",
+    "examples": ["the economy after covid", "businesses hit by lockdowns"]
+  },
+  {
+    "name": "Gender/sexuality/family",
+    "definition": "Gender, sexuality, trans issues, abortion, feminism, and family life, from any point of view.",
+    "examples": ["trans rights", "the breakdown of the family"]
   }
 ]

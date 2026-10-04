@@ -16,7 +16,7 @@
   },
   {
     "name": "Health",
-    "definition": "The NHS and health care, Covid-19, and the economic effects of Covid.",
+    "definition": "The NHS and health care (including mental health), Covid-19, and the economic effects of Covid.",
     "examples": ["the NHS", "covid"]
   },
   {
@@ -26,7 +26,7 @@
   },
   {
     "name": "Inequality",
-    "definition": "Poverty, inequality between rich and poor, housing and homelessness.",
+    "definition": "Poverty, inequality between rich and poor or between classes, housing and its costs, homelessness.",
     "examples": ["poverty", "affordable housing"]
   },
   {
@@ -36,8 +36,8 @@
   },
   {
     "name": "Austerity/spending",
-    "definition": "Public spending and services: education, welfare and benefits, cuts, social care, pensions.",
-    "examples": ["cuts to public services", "schools"]
+    "definition": "Public spending and services: education, welfare and benefits, cuts, social care, pensions, transport and infrastructure.",
+    "examples": ["schools", "potholes"]
   },
   {
     "name": "Negativity",
@@ -56,8 +56,8 @@
   },
   {
     "name": "Other",
-    "definition": "Constitution, devolution, Scottish independence, trade, emergencies, elections, transport, any other political issue.",
-    "examples": ["scottish independence", "potholes"]
+    "definition": "Constitution, devolution, Scottish independence, trade and self-sufficiency, emergencies, elections, or any other political issue.",
+    "examples": ["scottish independence", "electoral reform"]
   },
   {
     "name": "Uncoded",
