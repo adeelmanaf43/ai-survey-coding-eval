@@ -1,0 +1,39 @@
+{
+  "split": "dev",
+  "n_eval": 300,
+  "train_waves": [
+    23,
+    24
+  ],
+  "n_train": 42404,
+  "results": [
+    {
+      "scheme": 12,
+      "method": "Always Economy",
+      "accuracy": 0.59,
+      "macro_f1": 0.062,
+      "kappa": 0.0
+    },
+    {
+      "scheme": 12,
+      "method": "TF-IDF + logistic regression",
+      "accuracy": 0.967,
+      "macro_f1": 0.709,
+      "kappa": 0.946
+    },
+    {
+      "scheme": 50,
+      "method": "Always Living costs",
+      "accuracy": 0.337,
+      "macro_f1": 0.017,
+      "kappa": 0.0
+    },
+    {
+      "scheme": 50,
+      "method": "TF-IDF + logistic regression",
+      "accuracy": 0.963,
+      "macro_f1": 0.767,
+      "kappa": 0.956
+    }
+  ]
+}

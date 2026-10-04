@@ -11,3 +11,5 @@
 
 | D-007 | 2026-10-04 | Codebooks drafte from the BES coding rules, then revised in a review against the 300 dev answers; I checked every change | details in docs/codebook_review.md |
 | D-008 | 2026-10-04 | Checked the 50→12 grouping in the W25 data: Asylum→Immigration, Election outcome→Other, Transport→Austerity/spending | The BES PDF table leaves these three out, and 3 label spellings differ from the data; the data wins |
+
+| D-09 | 2026-10-04 | Baselines: "always the most common category" and TF-IDF (letter chunks) + logistic regression with default settings, trained on W23–W24 with evaluation respondents left out | Gives the AI a fair, simple bar to beat; dev set only, test untouched |
