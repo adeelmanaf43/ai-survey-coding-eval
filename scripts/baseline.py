@@ -85,6 +85,7 @@ for scheme, n_cat in (("label12", 12), ("label50", 50)):
     rows.append({"scheme": n_cat, "method": "TF-IDF + logistic regression",
                  **score(evalset[scheme], evalset[f"pred_{scheme}"])})
 
+
 # 4. Print and save: numbers to results/ (commit), predictions to data/ (git-ignored, for error analysis later)
 print(f"\nResults on the {SPLIT} set ({len(evalset)} answers)")
 print(f"{'Scheme':<8}{'Method':<34}{'Accuracy':>9}{'Macro-F1':>10}{'Kappa':>7}")
@@ -92,10 +93,8 @@ for r in rows:
     print(f"{r['scheme']:<8}{r['method']:<34}{r['accuracy']:>9.1%}{r['macro_f1']:>10.1%}{r['kappa']:>7.2f}")
 Path("results").mkdir(exist_ok=True)
 with open(f"results/baseline_{SPLIT}.json", "w") as f:
-    json.dump({"split": SPLIT, "n_eval": len(
-        evalset), "train_waves": TRAIN_WAVES, "n_train": len(train), "results": rows}, f, indent=2)
-
-
+    json.dump({"split": SPLIT, "n_eval": len(evalset), "train_waves": TRAIN_WAVES,
+               "n_train": len(train), "results": rows}, f, indent=2)
 evalset[["id", "label12", "pred_label12", "label50", "pred_label50"]].to_csv(
     f"data/processed/baseline_pred_{SPLIT}.csv", index=False)
 print(f"\nSaved results/baseline_{SPLIT}.json")
