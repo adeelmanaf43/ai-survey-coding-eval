@@ -1,0 +1,114 @@
+{
+  "split": "dev",
+  "model": "llama3.1:latest",
+  "results": {
+    "12_cat": {
+      "accuracy": 0.967,
+      "macro_f1": 0.786,
+      "kappa": 0.947,
+      "new": 0.868,
+      "n_coded": 300,
+      "unsure_share": 0.0,
+      "accuracy_when_unsure": NaN,
+      "accuracy_when_sure": 0.967,
+      "median_seconds": 6.0,
+      "invalid": 0,
+      "top_mistakes": [
+        {
+          "human": "Economy",
+          "llama": "Austerity/spending",
+          "count": 1
+        },
+        {
+          "human": "Economy",
+          "llama": "Other left-right",
+          "count": 1
+        },
+        {
+          "human": "Environment",
+          "llama": "Uncoded",
+          "count": 1
+        },
+        {
+          "human": "Health",
+          "llama": "Austerity/spending",
+          "count": 1
+        },
+        {
+          "human": "Other",
+          "llama": "Environment",
+          "count": 1
+        },
+        {
+          "human": "Other",
+          "llama": "Other lib-auth",
+          "count": 1
+        },
+        {
+          "human": "Other lib-auth",
+          "llama": "Inequality",
+          "count": 1
+        },
+        {
+          "human": "Other lib-auth",
+          "llama": "Negativity",
+          "count": 1
+        }
+      ]
+    },
+    "50_cat": {
+      "accuracy": 0.963,
+      "macro_f1": 0.804,
+      "kappa": 0.956,
+      "new": 0.842,
+      "n_coded": 300,
+      "unsure_share": 0.0,
+      "accuracy_when_unsure": NaN,
+      "accuracy_when_sure": 0.963,
+      "median_seconds": 7.5,
+      "invalid": 0,
+      "top_mistakes": [
+        {
+          "human": "Economy-general",
+          "llama": "Unemployment",
+          "count": 2
+        },
+        {
+          "human": "Economy-general",
+          "llama": "Economy-personal",
+          "count": 1
+        },
+        {
+          "human": "Economy-general",
+          "llama": "Inflation",
+          "count": 1
+        },
+        {
+          "human": "Environment",
+          "llama": "Living costs",
+          "count": 1
+        },
+        {
+          "human": "Environment",
+          "llama": "Uncoded",
+          "count": 1
+        },
+        {
+          "human": "Inflation",
+          "llama": "Living costs",
+          "count": 1
+        },
+        {
+          "human": "International trade",
+          "llama": "Domestic emergency",
+          "count": 1
+        },
+        {
+          "human": "Morals",
+          "llama": "Pol-neg",
+          "count": 1
+        }
+      ]
+    }
+  }
+}
