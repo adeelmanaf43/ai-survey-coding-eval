@@ -12,7 +12,7 @@ import requests
 
 MODEL = "llama3.1:latest"
 OLLAMA = "http://localhost:11434/api/chat"
-SPLIT = "dev"     # change to "test" only once, in the final evaluation
+SPLIT = "test"    # final evaluation: the test set is used once
 SEED = 2026
 QUESTION = ("As far as you're concerned, what is the SINGLE MOST important issue "
             "facing the country at the present time?")
@@ -81,11 +81,23 @@ for scheme in ("12", "50"):
             payload = {"model": MODEL, "stream": False, "format": schema, "keep_alive": "30m",
                        "messages": [{"role": "system", "content": prompt},
                                     {"role": "user", "content": f'Answer: "{row.text}"'}],
-                       "options": {"temperature": 0, "seed": SEED, "num_ctx": 8192, "num_predict": 50}}
-            t0 = time.time()
-            reply = requests.post(OLLAMA, json=payload, timeout=600).json()
-            if "error" in reply:
-                raise SystemExit(f"Ollama error: {reply['error']}")
+                       "options": {"temperature": 0, "seed": SEED, "num_ctx": 8192, "num_gpu": 0, "num_predict": 50}}
+            # up to 3 tries: after a crash, Ollama reloads the model by itself
+            for attempt in range(1, 4):
+                t0 = time.time()
+                try:
+                    reply = requests.post(
+                        OLLAMA, json=payload, timeout=600).json()
+                except requests.exceptions.RequestException as e:
+                    reply = {"error": str(e)}
+                if "error" not in reply:
+                    break
+                print(
+                    f"  Ollama error, try {attempt} of 3: {str(reply['error'])[:150]}")
+                time.sleep(30)
+            else:
+                raise SystemExit(
+                    "Ollama failed 3 times in a row. Restart Ollama, then run the script again.")
             try:
                 result = json.loads(reply["message"]["content"])
                 pred, unsure = result["category"], result["unsure"]

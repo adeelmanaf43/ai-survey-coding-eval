@@ -1,0 +1,7 @@
+data/
+*.sav
+*.dta
+*.zip
+.env
+.venv/
+__pycache__/

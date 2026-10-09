@@ -15,7 +15,7 @@ STRINGS = "data/raw/BES2024_W30Strings_v30.1.sav"
 PANEL = "data/raw/BES2024_W31_Panel_v31.05.sav"
 # the two human-coded waves just before wave 25
 TRAIN_WAVES = [23, 24]
-SPLIT = "dev"                 # change to "test" only once, in the final evaluation
+SPLIT = "test"                 # change to "test" only once, in the final evaluation
 
 
 # 1. Check the column exist, and take category names from wave 25 so every wave is spelled the same
@@ -59,7 +59,8 @@ train.loc[train["label50"].str.lower().eq(
 
 
 # 3. Leave out everyone in our evaluation set, so the model never sees their earlier answers
-evalset = pd.read_csv(f"data/processed/eval_{SPLIT}.csv")
+evalset = pd.read_csv(
+    f"data/processed/eval_{SPLIT}.csv", keep_default_na=False)
 
 
 def score(truth, pred):
