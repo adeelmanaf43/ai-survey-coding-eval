@@ -19,3 +19,5 @@
 | D-011 | 2026-10-05 | Llama 3.1 8B via Ollama: temperature 0, seed 2026, answers restricted to codebook names, codebook in the system message, one scheme at a time, saved after every answer | Reproducible; always a valid category; the codebook is read once and reused (about 7 s per answer instead of minutes); the run can resume after a stop |
 
 | D-012 | 2026-10-05 | Froze the codebooks and prompt after the first dev run (prompt versions 459a2e64 and b0fcfe68) | Dev results were at the ceiling (~96%); more tuning on 300 answers would overfit, and the test run must use exactly what was tested on dev |
+
+| D-013 | 2026-10-08 | Test "second-opinion" routing: answers where Llama and the classifier disagree go to a person; measure the workload and the final accuracy | Llama's own "unsure" flag caught nothing; disagreement between two different methods is a cheap, practical warning sign |
