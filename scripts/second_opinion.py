@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 
-SPLIT = "dev"
+SPLIT = "test"
 
 truth = pd.read_csv(f"data/processed/eval_{SPLIT}.csv", keep_default_na=False)
 base = pd.read_csv(

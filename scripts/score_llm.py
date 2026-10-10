@@ -1,4 +1,4 @@
-# Session 11: score Llama's codes against the human codes, next to the baselines.
+# score Llama's codes against the human codes, next to the baselines.
 # Prints and saves numbers and category names only, so the output is safe to share and commit.
 import json
 from pathlib import Path
@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.metrics import accuracy_score, cohen_kappa_score, f1_score
 
-SPLIT = "dev"
+SPLIT = "test"
 
 truth = pd.read_csv(f"data/processed/eval_{SPLIT}.csv", keep_default_na=False)
 seen = pd.read_csv(

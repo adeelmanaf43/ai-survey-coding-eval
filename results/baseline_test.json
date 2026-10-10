@@ -1,0 +1,50 @@
+{
+  "split": "test",
+  "n_eval": 1200,
+  "train_waves": [
+    23,
+    24
+  ],
+  "n_train": 42404,
+  "results": [
+    {
+      "scheme": 12,
+      "method": "Always Economy",
+      "accuracy": 0.59,
+      "macro_f1": 0.057,
+      "kappa": 0.0
+    },
+    {
+      "scheme": 12,
+      "method": "TF-IDF + logistic regression",
+      "accuracy": 0.974,
+      "macro_f1": 0.801,
+      "kappa": 0.958
+    },
+    {
+      "scheme": 50,
+      "method": "Always Living costs",
+      "accuracy": 0.338,
+      "macro_f1": 0.013,
+      "kappa": 0.0
+    },
+    {
+      "scheme": 50,
+      "method": "TF-IDF + logistic regression",
+      "accuracy": 0.96,
+      "macro_f1": 0.741,
+      "kappa": 0.952
+    }
+  ],
+  "seen_vs_new": {
+    "seen_share": 0.891,
+    "12_cat": {
+      "seen": 0.994,
+      "new": 0.809
+    },
+    "50_cat": {
+      "seen": 0.983,
+      "new": 0.771
+    }
+  }
+}

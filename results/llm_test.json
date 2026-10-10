@@ -1,0 +1,114 @@
+{
+  "split": "test",
+  "model": "llama3.1:latest",
+  "results": {
+    "12_cat": {
+      "accuracy": 0.954,
+      "macro_f1": 0.783,
+      "kappa": 0.927,
+      "new": 0.802,
+      "n_coded": 1200,
+      "unsure_share": 0.001,
+      "accuracy_when_unsure": 1.0,
+      "accuracy_when_sure": 0.954,
+      "median_seconds": 5.8,
+      "invalid": 0,
+      "top_mistakes": [
+        {
+          "human": "Economy",
+          "llama": "Austerity/spending",
+          "count": 7
+        },
+        {
+          "human": "Health",
+          "llama": "Austerity/spending",
+          "count": 6
+        },
+        {
+          "human": "Immigration",
+          "llama": "Inequality",
+          "count": 5
+        },
+        {
+          "human": "Other lib-auth",
+          "llama": "Negativity",
+          "count": 5
+        },
+        {
+          "human": "Austerity/spending",
+          "llama": "Environment",
+          "count": 4
+        },
+        {
+          "human": "Other lib-auth",
+          "llama": "Other left-right",
+          "count": 4
+        },
+        {
+          "human": "Other lib-auth",
+          "llama": "Inequality",
+          "count": 3
+        },
+        {
+          "human": "Economy",
+          "llama": "Inequality",
+          "count": 2
+        }
+      ]
+    },
+    "50_cat": {
+      "accuracy": 0.959,
+      "macro_f1": 0.738,
+      "kappa": 0.951,
+      "new": 0.832,
+      "n_coded": 1200,
+      "unsure_share": 0.001,
+      "accuracy_when_unsure": 1.0,
+      "accuracy_when_sure": 0.959,
+      "median_seconds": 7.6,
+      "invalid": 0,
+      "top_mistakes": [
+        {
+          "human": "Inflation",
+          "llama": "Living costs",
+          "count": 4
+        },
+        {
+          "human": "Transport/infrastructure",
+          "llama": "Environment",
+          "count": 4
+        },
+        {
+          "human": "Economy-general",
+          "llama": "Inflation",
+          "count": 3
+        },
+        {
+          "human": "Health",
+          "llama": "Social care",
+          "count": 3
+        },
+        {
+          "human": "Economy-general",
+          "llama": "Living costs",
+          "count": 3
+        },
+        {
+          "human": "Poverty",
+          "llama": "Inequality",
+          "count": 2
+        },
+        {
+          "human": "Domestic emergency",
+          "llama": "Living costs",
+          "count": 2
+        },
+        {
+          "human": "Living costs",
+          "llama": "Economy-personal",
+          "count": 2
+        }
+      ]
+    }
+  }
+}
