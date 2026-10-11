@@ -22,7 +22,7 @@
   "same_code_as_llama": 0.86,
   "seconds_median": 1.8,
   "seconds_mean": 8.1,
-  "hours_per_1000_answers": 0.5,
+  "hours_per_1000_answers": 2.2,
   "differences": [
     {
       "bes": "Negativity",

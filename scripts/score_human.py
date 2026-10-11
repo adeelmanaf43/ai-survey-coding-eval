@@ -29,12 +29,12 @@ print(
     f"  You and Llama chose the same code for {same_as_llama:.0%} of these answers")
 
 sec = df["seconds"]
-per_1000 = sec.median() * 1000 / 3600
+# cost depends on total time, so use the mean
+per_1000 = sec.mean() * 1000 / 3600
 print(
     f"\nYour time: median {sec.median():.0f} s per answer (mean {sec.mean():.0f} s), {sec.sum() / 60:.0f} min in total")
 print(
-    f"  At your median pace, coding 1,000 answers by hand takes about {per_1000:.1f} hours")
-
+    f"  At your average pace, coding 1,000 answers by hand takes about {per_1000:.1f} hours")
 diff = df[df["human"] != df["label12"]].groupby(
     ["label12", "human"]).size().sort_values(ascending=False).head(8)
 print("\nWhere you and the BES coders differed most (BES code -> your code):")
