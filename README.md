@@ -64,7 +64,7 @@ flowchart LR
    - **Runs are reproducible:** temperature 0, a fixed seed, and a prompt-version hash stored with every output row.
    - **Results are saved after every answer, and failed calls are retried,** so a 5-hour run can stop and resume safely.
    - **Software versions:** the dev run used Ollama 0.35.0. Before the test run, Ollama updated itself to 0.35.1, which put part of the model on the laptop's old graphics chip and crashed. The test run therefore used the CPU only (`num_gpu: 0`). Re-coding 10 dev answers with the new setup gave exactly the same codes as the original dev run (D-017).
-4. **Codebooks.** I wrote them from the BES coding guide, checked them against the category labels in the data, reviewed them against the 300 dev answers (see `docs/codebook_review.md`), and froze them before the test run (prompt versions `459a2e64` and `b0fcfe68`).
+4. **Codebooks.** Drafted with an AI assistant from the BES coding guide, then checked against the category labels in the data and reviewed against the 300 dev answers. I checked every change (D-007, `docs/codebook_review.md`). They were frozen before the test run (prompt versions `459a2e64` and `b0fcfe68`).
 5. **Second opinion.** Where Llama and the classifier give different codes, a person would check the answer. I measure how many answers that is, and how accurate the final codes would be.
 6. **Metrics.**
    - Accuracy.
@@ -163,6 +163,7 @@ ai-survey-coding-eval/
 │   ├── score_llm.py            # compare Llama with the human codes and baselines
 │   ├── second_opinion.py       # what if a person checks only the disagreements?
 │   └── diagnose_ollama.py      # find why Ollama crashes, one setting at a time
+├── LICENSE
 ├── requirements.txt
 └── README.md
 ```
@@ -182,19 +183,22 @@ ai-survey-coding-eval/
    pip install -r requirements.txt
    ```
 3. **Install [Ollama](https://ollama.com) and the model:** `ollama pull llama3.1`
-4. **Run the pipeline on the dev set.**
+4. **Build the evaluation set and check the codebooks.**
    ```bash
    python scripts/inspect_bes.py
    python scripts/build_eval_set.py
    python scripts/check_mapping.py
    python scripts/check_codebooks.py
+   ```
+5. **Dev run.** The four evaluation scripts are committed with `SPLIT = "test"`, as used for the final run. Set it to `"dev"` at the top of `baseline.py`, `llm_code.py`, `score_llm.py` and `second_opinion.py`, then run:
+   ```bash
    python scripts/baseline.py
    python scripts/llm_code.py        # about 70 minutes for 300 dev answers on a 16 GB laptop
    python scripts/score_llm.py
    python scripts/second_opinion.py
    ```
-5. **Final run on the test set.** Set `SPLIT = "test"` at the top of `baseline.py`, `llm_code.py`, `score_llm.py` and `second_opinion.py`, then run those four again. Coding 1,200 answers in both schemes takes about 5 hours.
-6. **If Ollama crashes,** run `python scripts/diagnose_ollama.py`. It tries one setting at a time and suggests a fix.
+6. **Final run on the test set.** Set `SPLIT = "test"` in the same four scripts and run them again. Coding 1,200 answers in both schemes takes about 5 hours.
+7. **If Ollama crashes,** run `python scripts/diagnose_ollama.py`. It tries one setting at a time and suggests a fix.
 
 ## Lessons learned
 
@@ -244,4 +248,4 @@ This is an independent project, not affiliated with or endorsed by the British E
 ## Author
 
 **Adeel Manaf**, data scientist (Python, R, statistics) building applied-AI tools for survey research.
-[LinkedIn]({{https://www.linkedin.com/in/adeel-manaf/}}) · [GitHub]({{https://github.com/adeelmanaf43}}) · [Email](mailto:{{adeelmanaf00@gmail.com}})
+[LinkedIn](https://www.linkedin.com/in/adeel-manaf/) · [GitHub](https://github.com/adeelmanaf43) · [Email](mailto:adeelmanaf00@gmail.com)

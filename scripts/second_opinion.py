@@ -1,4 +1,4 @@
-# Day 4: If a person checks only the answers where LLama and the classifier disagree,
+# If a person checks only the answers where Llama and the classifier disagree,
 # how much checking does that take, and how accurate is the final result?
 
 import json
@@ -45,19 +45,19 @@ for scheme in ("12", "50"):
 
     print(f"\n{scheme} categories ({s['n']} answers)")
     print(
-        f" Agree on {s['agree']} answers ({s['agree'] / s['n']:.0%}: right {s['accuracy_when_agree']:.1%} of the time)")
+        f" Agree on {s['agree']} answers ({s['agree'] / s['n']:.0%}): right {s['accuracy_when_agree']:.1%} of the time")
     print(
-        f" Disagree on {s['disagree']} answers ({s['disagree'] / s['n']:.0%}): Llama right{s['llama_right_when_disagree']:.0%},"
-        f" classifier right {s['classifier_right_when_disagree']:.0f}")
-    print(f" LLama's {s['llama_errors']} mistakes: {s['llama_errors_caught']} among the disagreements (a person would see them),"
+        f" Disagree on {s['disagree']} answers ({s['disagree'] / s['n']:.0%}): Llama right {s['llama_right_when_disagree']:.0%},"
+        f" classifier right {s['classifier_right_when_disagree']:.0%}")
+    print(f" Llama's {s['llama_errors']} mistakes: {s['llama_errors_caught']} among the disagreements (a person would see them),"
           f" {s['llama_errors'] - s['llama_errors_caught']} where both methods agree (missed)")
     print(
-        f" Accuracy: Llama alnoe {s['accuracy_llama_alone']:.1%} | with a person checking the {s['disagree']} disagreements"
+        f" Accuracy: Llama alone {s['accuracy_llama_alone']:.1%} | with a person checking the {s['disagree']} disagreements"
         f" {s['accuracy_with_review']:.1%}")
 
 
 Path("results").mkdir(exist_ok=True)
-with open(f"results/second_opionion_{SPLIT}.json", "w") as f:
+with open(f"results/second_opinion_{SPLIT}.json", "w") as f:
     json.dump(
         {"split": SPLIT, "assumption": "a person checking a disagreement gives the BES coder's code",
          "results": summary, }, f, indent=2)
