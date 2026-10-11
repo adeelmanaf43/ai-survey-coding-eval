@@ -83,6 +83,8 @@ for scheme, n_cat in (("label12", 12), ("label50", 50)):
                           LogisticRegression(max_iter=2000))
     model.fit(data["text"], data[scheme])
     evalset[f"pred_{scheme}"] = model.predict(evalset["text"])
+    evalset[f"conf_{scheme}"] = model.predict_proba(
+        evalset["text"]).max(axis=1)   # how sure the classifier is (0 to 1)
     rows.append({"scheme": n_cat, "method": "TF-IDF + logistic regression",
                  **score(evalset[scheme], evalset[f"pred_{scheme}"])})
 
@@ -130,7 +132,6 @@ with open(f"results/baseline_{SPLIT}.json", "w") as f:
 
 evalset["seen"] = seen
 
-evalset[["id", "seen", "label12", "pred_label12", "label50",
-         "pred_label50"]].to_csv(
-             f"data/processed/baseline_pred_{SPLIT}.csv", index=False
-)
+evalset[["id", "seen", "label12", "pred_label12", "conf_label12",
+         "label50", "pred_label50", "conf_label50"]].to_csv(
+    f"data/processed/baseline_pred_{SPLIT}.csv", index=False)

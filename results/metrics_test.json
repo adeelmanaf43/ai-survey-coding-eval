@@ -1,0 +1,470 @@
+{
+  "bootstrap": {
+    "resamples": 1000,
+    "seed": 2026,
+    "interval": "95%, percentile"
+  },
+  "12_cat": {
+    "TF-IDF classifier": {
+      "accuracy": [
+        0.974,
+        0.966,
+        0.982
+      ],
+      "macro_f1": [
+        0.801,
+        0.729,
+        0.86
+      ],
+      "kappa": [
+        0.958,
+        0.945,
+        0.972
+      ]
+    },
+    "Llama 3.1 8B": {
+      "accuracy": [
+        0.954,
+        0.942,
+        0.966
+      ],
+      "macro_f1": [
+        0.783,
+        0.682,
+        0.846
+      ],
+      "kappa": [
+        0.927,
+        0.908,
+        0.945
+      ]
+    },
+    "classifier_minus_llama_accuracy_points": [
+      2.0,
+      0.8,
+      3.3
+    ],
+    "per_category_f1": [
+      {
+        "category": "Economy",
+        "n": 708,
+        "classifier": 0.992,
+        "llama": 0.991
+      },
+      {
+        "category": "Immigration",
+        "n": 139,
+        "classifier": 0.989,
+        "llama": 0.974
+      },
+      {
+        "category": "Health",
+        "n": 71,
+        "classifier": 0.965,
+        "llama": 0.941
+      },
+      {
+        "category": "Environment",
+        "n": 66,
+        "classifier": 0.947,
+        "llama": 0.942
+      },
+      {
+        "category": "Negativity",
+        "n": 56,
+        "classifier": 0.957,
+        "llama": 0.904
+      },
+      {
+        "category": "Other lib-auth",
+        "n": 56,
+        "classifier": 0.912,
+        "llama": 0.828
+      },
+      {
+        "category": "Inequality",
+        "n": 50,
+        "classifier": 1.0,
+        "llama": 0.901
+      },
+      {
+        "category": "Europe",
+        "n": 26,
+        "classifier": 0.98,
+        "llama": 0.98
+      },
+      {
+        "category": "Austerity/spending",
+        "n": 12,
+        "classifier": 0.5,
+        "llama": 0.412
+      },
+      {
+        "category": "Uncoded",
+        "n": 7,
+        "classifier": 0.364,
+        "llama": 0.625
+      },
+      {
+        "category": "Other",
+        "n": 5,
+        "classifier": 0.8,
+        "llama": 0.571
+      },
+      {
+        "category": "Other left-right",
+        "n": 3,
+        "classifier": 0.0,
+        "llama": 0.444
+      },
+      {
+        "category": "Terrorism",
+        "n": 1,
+        "classifier": 1.0,
+        "llama": 0.667
+      }
+    ]
+  },
+  "50_cat": {
+    "TF-IDF classifier": {
+      "accuracy": [
+        0.96,
+        0.949,
+        0.971
+      ],
+      "macro_f1": [
+        0.741,
+        0.693,
+        0.828
+      ],
+      "kappa": [
+        0.952,
+        0.938,
+        0.965
+      ]
+    },
+    "Llama 3.1 8B": {
+      "accuracy": [
+        0.959,
+        0.948,
+        0.969
+      ],
+      "macro_f1": [
+        0.738,
+        0.659,
+        0.781
+      ],
+      "kappa": [
+        0.951,
+        0.937,
+        0.963
+      ]
+    },
+    "classifier_minus_llama_accuracy_points": [
+      0.1,
+      -1.1,
+      1.3
+    ],
+    "per_category_f1": [
+      {
+        "category": "Living costs",
+        "n": 405,
+        "classifier": 0.984,
+        "llama": 0.983
+      },
+      {
+        "category": "Economy-general",
+        "n": 206,
+        "classifier": 0.969,
+        "llama": 0.978
+      },
+      {
+        "category": "Immigration",
+        "n": 135,
+        "classifier": 0.978,
+        "llama": 0.989
+      },
+      {
+        "category": "Inflation",
+        "n": 90,
+        "classifier": 0.983,
+        "llama": 0.956
+      },
+      {
+        "category": "Health",
+        "n": 69,
+        "classifier": 0.979,
+        "llama": 0.964
+      },
+      {
+        "category": "Environment",
+        "n": 66,
+        "classifier": 0.947,
+        "llama": 0.963
+      },
+      {
+        "category": "Pol-neg",
+        "n": 33,
+        "classifier": 0.904,
+        "llama": 0.985
+      },
+      {
+        "category": "Europe",
+        "n": 26,
+        "classifier": 0.98,
+        "llama": 1.0
+      },
+      {
+        "category": "Poverty",
+        "n": 22,
+        "classifier": 0.927,
+        "llama": 0.952
+      },
+      {
+        "category": "Partisan-neg",
+        "n": 21,
+        "classifier": 0.93,
+        "llama": 0.976
+      },
+      {
+        "category": "Housing",
+        "n": 14,
+        "classifier": 0.966,
+        "llama": 1.0
+      },
+      {
+        "category": "Inequality",
+        "n": 14,
+        "classifier": 0.966,
+        "llama": 0.903
+      },
+      {
+        "category": "Crime",
+        "n": 13,
+        "classifier": 1.0,
+        "llama": 0.929
+      },
+      {
+        "category": "War",
+        "n": 12,
+        "classifier": 0.88,
+        "llama": 0.88
+      },
+      {
+        "category": "Foreign affairs",
+        "n": 9,
+        "classifier": 1.0,
+        "llama": 0.875
+      },
+      {
+        "category": "Uncoded",
+        "n": 7,
+        "classifier": 0.471,
+        "llama": 0.824
+      },
+      {
+        "category": "Morals",
+        "n": 6,
+        "classifier": 0.909,
+        "llama": 0.714
+      },
+      {
+        "category": "Transport/infrastructure",
+        "n": 4,
+        "classifier": 0.0,
+        "llama": 0.0
+      },
+      {
+        "category": "Pol values-auth",
+        "n": 4,
+        "classifier": 0.667,
+        "llama": 0.667
+      },
+      {
+        "category": "Asylum",
+        "n": 4,
+        "classifier": 0.667,
+        "llama": 0.857
+      },
+      {
+        "category": "Defence",
+        "n": 4,
+        "classifier": 0.857,
+        "llama": 0.857
+      },
+      {
+        "category": "Education",
+        "n": 3,
+        "classifier": 1.0,
+        "llama": 0.8
+      },
+      {
+        "category": "Pol values-liberal",
+        "n": 3,
+        "classifier": 0.8,
+        "llama": 0.0
+      },
+      {
+        "category": "Taxation",
+        "n": 3,
+        "classifier": 1.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Gender/sexuality/family",
+        "n": 3,
+        "classifier": 0.8,
+        "llama": 0.8
+      },
+      {
+        "category": "Domestic emergency",
+        "n": 2,
+        "classifier": 0.8,
+        "llama": 0.0
+      },
+      {
+        "category": "Pol values-left",
+        "n": 2,
+        "classifier": 0.667,
+        "llama": 0.0
+      },
+      {
+        "category": "Societal divides",
+        "n": 2,
+        "classifier": 0.0,
+        "llama": 0.8
+      },
+      {
+        "category": "Scot-ind",
+        "n": 2,
+        "classifier": 1.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Unemployment",
+        "n": 2,
+        "classifier": 1.0,
+        "llama": 0.8
+      },
+      {
+        "category": "Coronavirus",
+        "n": 2,
+        "classifier": 1.0,
+        "llama": 0.667
+      },
+      {
+        "category": "Debt/deficit",
+        "n": 2,
+        "classifier": 1.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Nat ident, goals-loss",
+        "n": 2,
+        "classifier": 0.667,
+        "llama": 0.5
+      },
+      {
+        "category": "Austerity",
+        "n": 2,
+        "classifier": 0.667,
+        "llama": 1.0
+      },
+      {
+        "category": "Pensions/ageing",
+        "n": 1,
+        "classifier": 0.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Terrorism",
+        "n": 1,
+        "classifier": 1.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Welfare",
+        "n": 1,
+        "classifier": 1.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Constitutional",
+        "n": 1,
+        "classifier": 0.0,
+        "llama": 1.0
+      },
+      {
+        "category": "Social care",
+        "n": 1,
+        "classifier": 0.0,
+        "llama": 0.4
+      },
+      {
+        "category": "Pol values-right",
+        "n": 1,
+        "classifier": 0.0,
+        "llama": 0.0
+      }
+    ]
+  },
+  "human_sample_12_cat": {
+    "n": 100,
+    "You": {
+      "accuracy": [
+        0.83,
+        0.75,
+        0.9
+      ],
+      "macro_f1": [
+        0.452,
+        0.348,
+        0.65
+      ],
+      "kappa": [
+        0.732,
+        0.626,
+        0.833
+      ]
+    },
+    "Llama 3.1 8B": {
+      "accuracy": [
+        0.96,
+        0.92,
+        0.99
+      ],
+      "macro_f1": [
+        0.919,
+        0.816,
+        0.994
+      ],
+      "kappa": [
+        0.936,
+        0.868,
+        0.986
+      ]
+    },
+    "TF-IDF classifier": {
+      "accuracy": [
+        0.96,
+        0.92,
+        0.99
+      ],
+      "macro_f1": [
+        0.821,
+        0.732,
+        0.984
+      ],
+      "kappa": [
+        0.937,
+        0.875,
+        0.985
+      ]
+    },
+    "llama_minus_you_accuracy_points": [
+      13.0,
+      7.0,
+      20.0
+    ]
+  }
+}

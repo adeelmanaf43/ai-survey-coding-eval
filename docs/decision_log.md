@@ -27,3 +27,7 @@
 | D-018 | 2026-10-11 | Human benchmark: I coded a random 100 of the 1,200 test answers (seed 2026) myself with the 12-category codebook, blind to the BES codes and model outputs, timing each answer | A human reference point on the same answers as the models, and minutes per answer for the cost estimate |
 
 | D-019 | 2026-10-11 | Cost estimates use the mean time per answer (total time ÷ answers), not the median | Cost depends on total time; most answers take 2 s, but the slow, hard ones are where the time goes |
+
+| D-020 | 2026-10-11 | Confidence intervals by bootstrap: 1,000 resamples of the test answers (seed 2026), 95% percentile intervals, both methods scored on the same resamples | Shows how much each number could move by chance; shared resamples give a fair interval for the gap between methods |
+
+| D-021 | 2026-10-11 | Review-rule curve: check the answers the rule flags first (Llama and the classifier disagree, or Llama is unsure), then the rest by classifier confidence, lowest first. Cost uses my mean time per answer, an assumed GBP 15 per hour, and up to 3x longer for hard cases | The rule itself was fixed on dev (D-014); the curve only describes the trade-off, and no threshold was tuned on the test set. Cost assumptions are stated so anyone can redo them with their own figures |

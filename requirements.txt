@@ -2,3 +2,4 @@ pandas
 pyreadstat
 scikit-learn
 requests
+matplotlib
