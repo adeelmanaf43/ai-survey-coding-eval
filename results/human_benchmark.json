@@ -1,0 +1,68 @@
+{
+  "scheme": 12,
+  "sample": "random 100 of the 1,200 test answers (seed 2026)",
+  "n": 100,
+  "methods": {
+    "You": {
+      "right": 83,
+      "agreement": 0.83,
+      "kappa": 0.732
+    },
+    "Llama 3.1 8B": {
+      "right": 96,
+      "agreement": 0.96,
+      "kappa": 0.936
+    },
+    "TF-IDF classifier": {
+      "right": 96,
+      "agreement": 0.96,
+      "kappa": 0.937
+    }
+  },
+  "same_code_as_llama": 0.86,
+  "seconds_median": 1.8,
+  "seconds_mean": 8.1,
+  "hours_per_1000_answers": 0.5,
+  "differences": [
+    {
+      "bes": "Negativity",
+      "you": "Other",
+      "count": 3
+    },
+    {
+      "bes": "Negativity",
+      "you": "Other lib-auth",
+      "count": 3
+    },
+    {
+      "bes": "Economy",
+      "you": "Other lib-auth",
+      "count": 1
+    },
+    {
+      "bes": "Economy",
+      "you": "Immigration",
+      "count": 1
+    },
+    {
+      "bes": "Austerity/spending",
+      "you": "Uncoded",
+      "count": 1
+    },
+    {
+      "bes": "Health",
+      "you": "Europe",
+      "count": 1
+    },
+    {
+      "bes": "Environment",
+      "you": "Immigration",
+      "count": 1
+    },
+    {
+      "bes": "Negativity",
+      "you": "Economy",
+      "count": 1
+    }
+  ]
+}
