@@ -244,4 +244,4 @@ This is an independent project, not affiliated with or endorsed by the British E
 ## Author
 
 **Adeel Manaf**, data scientist (Python, R, statistics) building applied-AI tools for survey research.
-[LinkedIn]({{LINKEDIN_URL}}) · [GitHub]({{GITHUB_URL}}) · [Email](mailto:{{EMAIL}})
+[LinkedIn]({{https://www.linkedin.com/in/adeel-manaf/}}) · [GitHub]({{https://github.com/adeelmanaf43}}) · [Email](mailto:{{adeelmanaf00@gmail.com}})
