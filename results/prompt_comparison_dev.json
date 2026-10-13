@@ -1,0 +1,90 @@
+{
+  "split": "dev",
+  "12_cat": {
+    "answers": 300,
+    "A": {
+      "version": "affd148b",
+      "accuracy": 0.97,
+      "macro_f1": 0.792,
+      "kappa": 0.952,
+      "median_seconds": 6.1,
+      "median_prompt_tokens": 447,
+      "invalid": 0
+    },
+    "B": {
+      "version": "459a2e64",
+      "accuracy": 0.967,
+      "macro_f1": 0.786,
+      "kappa": 0.947,
+      "median_seconds": 6.0,
+      "median_prompt_tokens": 591,
+      "invalid": 0
+    },
+    "same_code_share": 0.993,
+    "only_B_right": 0,
+    "only_A_right": 1,
+    "mcnemar_exact_p": 1.0,
+    "examples_helped": [],
+    "examples_hurt": [
+      {
+        "human": "Other lib-auth",
+        "wrong_code": "Negativity",
+        "count": 1
+      }
+    ]
+  },
+  "50_cat": {
+    "answers": 300,
+    "A": {
+      "version": "06a61780",
+      "accuracy": 0.96,
+      "macro_f1": 0.724,
+      "kappa": 0.952,
+      "median_seconds": 7.2,
+      "median_prompt_tokens": 1347,
+      "invalid": 0
+    },
+    "B": {
+      "version": "b0fcfe68",
+      "accuracy": 0.963,
+      "macro_f1": 0.804,
+      "kappa": 0.956,
+      "median_seconds": 7.5,
+      "median_prompt_tokens": 1952,
+      "invalid": 0
+    },
+    "same_code_share": 0.977,
+    "only_B_right": 3,
+    "only_A_right": 2,
+    "mcnemar_exact_p": 1.0,
+    "examples_helped": [
+      {
+        "human": "Economy-general",
+        "wrong_code": "Austerity",
+        "count": 1
+      },
+      {
+        "human": "Nat ident, goals-loss",
+        "wrong_code": "Partisan-neg",
+        "count": 1
+      },
+      {
+        "human": "Other",
+        "wrong_code": "Uncoded",
+        "count": 1
+      }
+    ],
+    "examples_hurt": [
+      {
+        "human": "Economy-general",
+        "wrong_code": "Unemployment",
+        "count": 1
+      },
+      {
+        "human": "Pol-neg",
+        "wrong_code": "Election outcome",
+        "count": 1
+      }
+    ]
+  }
+}
