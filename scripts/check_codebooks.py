@@ -1,4 +1,4 @@
-# CHecks: names match the data, every category is defined, no dev answers copied word for word.
+# Checks: names match the data, every category is defined, no dev answers copied word for word.
 import json
 
 import pandas as pd

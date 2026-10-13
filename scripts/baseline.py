@@ -1,5 +1,5 @@
-# Session 10, Hour 2: two baselines the AI model has to beat.
-# Prints and saves numbers only (no answers), so the output is safe to share and commit
+# Two baselines the AI model has to beat.
+# Prints and saves numbers only (no answers), so the output is safe to share and commit.
 
 import json
 from pathlib import Path
@@ -15,10 +15,10 @@ STRINGS = "data/raw/BES2024_W30Strings_v30.1.sav"
 PANEL = "data/raw/BES2024_W31_Panel_v31.05.sav"
 # the two human-coded waves just before wave 25
 TRAIN_WAVES = [23, 24]
-SPLIT = "test"                 # change to "test" only once, in the final evaluation
+SPLIT = "test"                 # "dev" while building; "test" once, for the final evaluation
 
 
-# 1. Check the column exist, and take category names from wave 25 so every wave is spelled the same
+# 1. Check the columns exist, and take category names from wave 25 so every wave is spelled the same
 
 _, smeta = pyreadstat.read_sav(STRINGS, metadataonly=True)
 _, pmeta = pyreadstat.read_sav(PANEL, metadataonly=True)
@@ -78,7 +78,7 @@ for scheme, n_cat in (("label12", 12), ("label50", 50)):
     rows.append({"scheme": n_cat, "method": f"Always {most_common}",
                  **score(evalset[scheme], [most_common] * len(evalset))})
 
-    # Baseline2: TF-IDF on small letter chunks (handles typos) + logistic regression default settings
+    # Baseline 2: TF-IDF on small letter chunks (handles typos) + logistic regression default settings
     model = make_pipeline(TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 5), min_df=3, sublinear_tf=True),
                           LogisticRegression(max_iter=2000))
     model.fit(data["text"], data[scheme])
@@ -119,7 +119,7 @@ for scheme, n_cat in (("label12", 12), ("label50", 50)):
     seen_vs_new[f"{n_cat}_cat"] = {"seen": round(right[seen].mean(), 3),
                                    "new": round(right[~seen].mean(), 3)}
     print(f"   {n_cat} categories, classifier accuracy: seen {right[seen].mean():.1%} | "
-          f"new {right[~seen].mean():.1%} ({(-seen).sum()} new answers)")
+          f"new {right[~seen].mean():.1%} ({(~seen).sum()} new answers)")
 
 
 # Add the split to the saved results, and a 'seen' column to the saved predictions

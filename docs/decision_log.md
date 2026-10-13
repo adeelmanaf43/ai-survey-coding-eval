@@ -1,35 +1,27 @@
 # Decision log
 
-| #     | Date       | Decision                                                                           | Why                                                                                                    |
-| ----- | ---------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| D-001 | 2026-10-03 | Run the model locally (Ollama); never send BES answers to cloud APIs or chat tools | BES terms: no passing data to third parties; GDPR                                                      |
-| D-002 | 2026-10-03 | Evaluate on wave 25 (May 2023)                                                     | BES codebook: waves 26+ were coded by GPT-4o, not humans                                               |
-| D-003 | 2026-10-03 | Model: Llama 3.1 8B (4.9 GB)                                                       | Already installed; fits the 3–8B plan; tested on this BES task in a 2025 study                         |
-| D-004 | 2026-10-03 | Keep the test set at 1,200                                                         | Median 6.7 s/answer (17 calls, 16 GB RAM, CPU/GPU: CPU) -> about 4.5 h for both schemes                |
-| D-005 | 2026-10-03 | Keep "Uncoded" answers as their own class in both schemes                          | BES gives them a 50-category code but no 12-category one; a real coding tool must handle vague answers |
-| D-006 | 2026-10-03 | Stratified sample by 50-category code (seed 2026): dev 300, test 1,200             | Keeps the wave's category mix; the seed makes it reproducible                                          |
-
-| D-007 | 2026-10-04 | Codebooks drafte from the BES coding rules, then revised in a review against the 300 dev answers; I checked every change | details in docs/codebook_review.md |
+| # | Date | Decision | Why |
+|---|---|---|---|
+| D-001 | 2026-10-03 | Run the model locally (Ollama); never send BES answers to cloud APIs or chat tools | BES terms: no passing data to third parties; GDPR |
+| D-002 | 2026-10-03 | Evaluate on wave 25 (May 2023) | BES codebook: waves 26+ were coded by GPT-4o, not humans |
+| D-003 | 2026-10-03 | Model: Llama 3.1 8B (4.9 GB) | Already installed; fits the 3–8B plan; tested on this BES task in a 2025 study |
+| D-004 | 2026-10-03 | Keep the test set at 1,200 | Median 6.7 s/answer (17 calls, 16 GB RAM, CPU/GPU: CPU) -> about 4.5 h for both schemes |
+| D-005 | 2026-10-03 | Keep "Uncoded" answers as their own class in both schemes | BES gives them a 50-category code but no 12-category one; a real coding tool must handle vague answers |
+| D-006 | 2026-10-03 | Stratified sample by 50-category code (seed 2026): dev 300, test 1,200 | Keeps the wave's category mix; the seed makes it reproducible |
+| D-007 | 2026-10-04 | Codebooks drafted with AI help from the BES coding rules, then revised in an AI-assisted review against the 300 dev answers; I checked every change | Honest about AI use; details in docs/codebook_review.md |
 | D-008 | 2026-10-04 | Checked the 50→12 grouping in the W25 data: Asylum→Immigration, Election outcome→Other, Transport→Austerity/spending | The BES PDF table leaves these three out, and 3 label spellings differ from the data; the data wins |
-
-| D-09 | 2026-10-04 | Baselines: "always the most common category" and TF-IDF (letter chunks) + logistic regression with default settings, trained on W23–W24 with evaluation respondents left out | Gives the AI a fair, simple bar to beat; dev set only, test untouched |
-
-| D-010 | 2026-10-04 | Report accuracy separately for answers seen word for word in training vs new answers | Most answers repeat phrases the classifier has memorised; the split shows where its accuracy comes from |
-
-| D-011 | 2026-10-05 | Llama 3.1 8B via Ollama: temperature 0, seed 2026, answers restricted to codebook names, codebook in the system message, one scheme at a time, saved after every answer | Reproducible; always a valid category; the codebook is read once and reused (about 7 s per answer instead of minutes); the run can resume after a stop |
-
-| D-012 | 2026-10-05 | Froze the codebooks and prompt after the first dev run (prompt versions 459a2e64 and b0fcfe68) | Dev results were at the ceiling (~96%); more tuning on 300 answers would overfit, and the test run must use exactly what was tested on dev |
-
-| D-013 | 2026-10-08 | Test "second-opinion" routing: answers where Llama and the classifier disagree go to a person; measure the workload and the final accuracy | Llama's own "unsure" flag caught nothing; disagreement between two different methods is a cheap, practical warning sign |
-
-| D-0174| 2026-10-09 | Run Llama on the CPU only (`"num_gpu": 0`) for the test run | Ollama updated itself from 0.35.0 (dev run) to 0.35.1, which put 3 of 33 model layers on the laptop's old graphics chip (Quadro M1000M, via Vulkan); the graphics driver crashed ("device lost") on the codebook prompt. A one-change-at-a-time check (scripts/diagnose_ollama.py) showed only the GPU path crashed. On the CPU only, the crashing answer worked and 10 of 10 dev answers got the same codes as in the dev run. Prompt versions unchanged (459a2e64, b0fcfe68) |
-
+| D-009 | 2026-10-04 | About 70 short dev answers (no IDs) were shared once with a cloud AI assistant during the codebook review, against D-001 | Recorded for transparency; details in docs/codebook_review.md |
+| D-010 | 2026-10-04 | Baselines: "always the most common category" and TF-IDF (letter chunks) + logistic regression with default settings, trained on W23–W24 with evaluation respondents left out | Gives the AI a fair, simple bar to beat; dev set only, test untouched |
+| D-011 | 2026-10-04 | Report accuracy separately for answers seen word for word in training vs new answers | Most answers repeat phrases the classifier has memorised; the split shows where its accuracy comes from |
+| D-012 | 2026-10-05 | Llama 3.1 8B via Ollama: temperature 0, seed 2026, answers restricted to codebook names, codebook in the system message, one scheme at a time, saved after every answer | Reproducible; always a valid category; the codebook is read once and reused (about 7 s per answer instead of minutes); the run can resume after a stop |
+| D-013 | 2026-10-05 | Froze the codebooks and prompt after the first dev run (prompt versions 459a2e64 and b0fcfe68) | Dev results were at the ceiling (~96%); more tuning on 300 answers would overfit, and the test run must use exactly what was tested on dev |
+| D-014 | 2026-10-08 | Test "second-opinion" routing: answers where Llama and the classifier disagree go to a person; measure the workload and the final accuracy | Llama's own "unsure" flag caught nothing; disagreement between two different methods is a cheap, practical warning sign |
+| D-015 | 2026-10-09 | Final evaluation: one run on the 1,200 test answers with the frozen codebooks and prompt (prompt versions 459a2e64 and b0fcfe68); only SPLIT switched to "test" (two technical changes during the run: D-016, D-017) | The test set is used once, so its results are an honest estimate |
+| D-016 | 2026-10-09 | Added automatic retry to llm_code.py (3 tries, 30 s apart) after Ollama crashed on the first test answer | A single crash shouldn't stop a 5-hour unattended run; prompt, model and settings are unchanged (same prompt versions) |
+| D-017 | 2026-10-09 | Run Llama on the CPU only (`"num_gpu": 0`) for the test run | Ollama updated itself from 0.35.0 (dev run) to 0.35.1, which put 3 of 33 model layers on the laptop's old graphics chip (Quadro M1000M, via Vulkan); the graphics driver crashed ("device lost") on the codebook prompt. A one-change-at-a-time check (scripts/diagnose_ollama.py) showed only the GPU path crashed. On the CPU only, the crashing answer worked and 10 of 10 dev answers got the same codes as in the dev run. Prompt versions unchanged (459a2e64, b0fcfe68) |
 | D-018 | 2026-10-11 | Human benchmark: I coded a random 100 of the 1,200 test answers (seed 2026) myself with the 12-category codebook, blind to the BES codes and model outputs, timing each answer | A human reference point on the same answers as the models, and minutes per answer for the cost estimate |
-
 | D-019 | 2026-10-11 | Cost estimates use the mean time per answer (total time ÷ answers), not the median | Cost depends on total time; most answers take 2 s, but the slow, hard ones are where the time goes |
-
 | D-020 | 2026-10-11 | Confidence intervals by bootstrap: 1,000 resamples of the test answers (seed 2026), 95% percentile intervals, both methods scored on the same resamples | Shows how much each number could move by chance; shared resamples give a fair interval for the gap between methods |
-
 | D-021 | 2026-10-11 | Review-rule curve: check the answers the rule flags first (Llama and the classifier disagree, or Llama is unsure), then the rest by classifier confidence, lowest first. Cost uses my mean time per answer, an assumed GBP 15 per hour, and up to 3x longer for hard cases | The rule itself was fixed on dev (D-014); the curve only describes the trade-off, and no threshold was tuned on the test set. Cost assumptions are stated so anyone can redo them with their own figures |
-
 | D-022 | 2026-10-13 | Laptop time per answer is the mean of the recorded times, as in D-019, leaving out any answer recorded at over 600 s: 1 of 2,400 (a 50-category answer recorded at 42,012 s, 11.7 h) | `llm_code.py` gives up on a call after 600 s, so a longer time means the laptop was asleep during that answer, not working (checked with `scripts/check_timing.py`). Counting it would put the 50-category run at 11.9 h per 1,000 answers instead of about 2.2 h. The cut-off comes from the timeout, not from the results. Codes and accuracy are unaffected |
+| D-023 | 2026-10-13 | Prompt comparison (roadmap H5): prompt A is prompt B without the examples ("Follow the definitions." and no "Examples:" part; prompt versions affd148b and 06a61780), run on the 300 dev answers after the test results were final and saved to separate files (llm_dev_12_A.csv, llm_dev_50_A.csv) | Measures what the examples add. Prompt B stays the method whatever A scores, so A cannot change any reported result. The examples were paraphrased from dev answers, so B may have an advantage on dev |

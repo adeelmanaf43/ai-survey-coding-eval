@@ -1,5 +1,7 @@
-# Session 11: Llama codes the evaluation answers with your codebooks, 100% locally through Ollama.
+# Llama codes the evaluation answers with your codebooks, 100% locally through Ollama.
 # Progress lines show counts and timings only (no answers), so the output is safe to share.
+#   python scripts\llm_code.py                          prompt B on the test set (the frozen final run)
+#   python scripts\llm_code.py --split dev --prompt A   prompt A on the dev set (roadmap H5, D-023)
 import argparse
 import csv
 import hashlib
@@ -12,26 +14,27 @@ import requests
 
 MODEL = "llama3.1:latest"
 OLLAMA = "http://localhost:11434/api/chat"
-SPLIT = "test"    # final evaluation: the test set is used once
+SPLIT = "test"    # final evaluation: the test set is used once ("dev" while building, or use --split dev)
 SEED = 2026
 QUESTION = ("As far as you're concerned, what is the SINGLE MOST important issue "
             "facing the country at the present time?")
 
 
-def system_prompt(codebook):
+def system_prompt(codebook, with_examples=True):
+    """Prompt B (with_examples=True) is the frozen prompt; prompt A is the same without the examples."""
     lines = ["You code answers to this British survey question, asked in May 2023:",
              f'"{QUESTION}"',
              "",
              "Assign each answer to exactly one category from the codebook below.",
              "Rules:",
-             "- Follow the definitions and examples.",
+             "- Follow the definitions and examples." if with_examples else "- Follow the definitions.",
              "- If the answer names several issues, code the first one mentioned.",
              '- Use "Uncoded" only if the answer is unclear, too vague, or not about politics or society.',
              '- Set "unsure" to true if you are not confident.',
              "",
              "Codebook:"]
     for c in codebook:
-        examples = "; ".join(f'"{e}"' for e in c["examples"])
+        examples = "; ".join(f'"{e}"' for e in c["examples"]) if with_examples else ""
         lines.append(f"- {c['name']}: {c['definition']}" +
                      (f" Examples: {examples}" if examples else ""))
     lines += ["",
@@ -40,9 +43,14 @@ def system_prompt(codebook):
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--split", choices=["dev", "test"], default=SPLIT,
+                    help="which evaluation set to code (default: the SPLIT setting above)")
+parser.add_argument("--prompt", choices=["A", "B"], default="B",
+                    help="B: definitions plus examples, the frozen prompt (default); A: definitions only")
 parser.add_argument("--limit", type=int,
                     help="code only the first N answers (quick test)")
 args = parser.parse_args()
+SPLIT = args.split
 
 answers = pd.read_csv(
     f"data/processed/eval_{SPLIT}.csv", keep_default_na=False)
@@ -53,7 +61,7 @@ if args.limit:
 for scheme in ("12", "50"):
     with open(f"codebooks/codebook_{scheme}.json", encoding="utf-8") as f:
         codebook = json.load(f)
-    prompt = system_prompt(codebook)
+    prompt = system_prompt(codebook, with_examples=args.prompt == "B")
     # changes if the codebook or prompt changes
     version = hashlib.sha1(prompt.encode("utf-8")).hexdigest()[:8]
     schema = {"type": "object",
@@ -61,14 +69,16 @@ for scheme in ("12", "50"):
                              "unsure": {"type": "boolean"}},
               "required": ["category", "unsure"]}
 
-    out = Path(f"data/processed/llm_{SPLIT}_{scheme}.csv")
+    # prompt B keeps its original file names; prompt A gets its own files, so nothing is overwritten
+    out = Path(f"data/processed/llm_{SPLIT}_{scheme}{'_A' if args.prompt == 'A' else ''}.csv")
     done = pd.read_csv(out, keep_default_na=False) if out.exists(
     ) else pd.DataFrame(columns=["id", "version"])
     if (done["version"].astype(str) != version).any():
         raise SystemExit(
             f"{out} was made with a different codebook or prompt. Delete that file to start fresh.")
     todo = answers[~answers["id"].isin(done["id"])]
-    print(f"\n{scheme} categories: {len(done)} already coded, {len(todo)} to go (prompt version {version})")
+    print(f"\n{scheme} categories, prompt {args.prompt}, {SPLIT} set: {len(done)} already coded,"
+          f" {len(todo)} to go (prompt version {version})")
 
     new_file = not out.exists()
     with open(out, "a", newline="", encoding="utf-8") as f:
@@ -111,4 +121,4 @@ for scheme in ("12", "50"):
                 print(
                     f"  {i}/{len(todo)} | {per:.1f} s per answer | about {per * (len(todo) - i) / 60:.0f} min left")
 
-print("\nDone. Next: python scripts\\score_llm.py")
+print("\nDone. Next: python scripts\\" + ("score_llm.py" if args.prompt == "B" else "compare_prompts.py"))

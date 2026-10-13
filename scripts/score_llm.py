@@ -1,4 +1,4 @@
-# score Llama's codes against the human codes, next to the baselines.
+# Score Llama's codes against the human codes, next to the baselines.
 # Prints and saves numbers and category names only, so the output is safe to share and commit.
 import json
 from pathlib import Path

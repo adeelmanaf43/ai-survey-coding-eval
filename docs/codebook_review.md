@@ -1,6 +1,6 @@
 # Codebook review (4 Oct 2026)
 
-The review of codebook_50.json against the 300 wave 25 dev answers, focusing on the largest categories and look-alike pairs.
+I reviewed codebook_50.json against the 300 wave 25 dev answers with an AI assistant, focusing on the largest categories and look-alike pairs. The assistant proposed the changes below, and I checked each one before accepting it (D-007). Sharing the dev answers with the assistant went against D-001 and is recorded as D-009.
 
 Changes:
 
