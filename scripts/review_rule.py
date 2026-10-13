@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import json
-from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")                     # draw straight to a file, no window
@@ -22,9 +21,10 @@ base = pd.read_csv(
 with open("results/human_benchmark.json") as f:
     # your average time per answer (D-019)
     human_seconds = json.load(f)["seconds_mean"]
-with open(f"results/llm_{SPLIT}.json") as f:
-    llm_seconds = {s: r["median_seconds"]
-                   for s, r in json.load(f)["results"].items()}
+
+# Llama's laptop time per answer: the mean, because cost depends on total time (D-019)
+llm_seconds = {f"{s}_cat": pd.read_csv(f"data/processed/llm_{SPLIT}_{s}.csv")["seconds"].mean()
+               for s in ("12", "50")}
 
 results = {"assumptions": {"person_checking_gives_the_BES_code": True, "human_seconds_per_answer": human_seconds,
                            "hourly_cost_gbp": HOURLY_COST_GBP, "hard_case_factor": HARD_FACTOR}}
@@ -98,10 +98,9 @@ for scheme, (x, y, rule) in curves.items():
             mec=SURFACE, mew=2, zorder=3)
     ax.annotate(f"{y[rule]:.1%}", (x[rule], y[rule]), xytext=(8, -16) if scheme == "50" else (-44, 6),
                 textcoords="offset points", color=INK, fontsize=9)
-x12, y12, rule12 = curves["12"]
-ax.annotate("A person checks only the answers where\nLlama and the classifier disagree",
-            xy=(x12[rule12], y12[rule12]), xytext=(0.085, 0.962), color=SECONDARY, fontsize=9,
-            arrowprops=dict(arrowstyle="-", color=MUTED, lw=0.8))
+x50, y50, rule50 = curves["50"]
+ax.annotate("Dots: a person checks only the answers where\nLlama and the classifier disagree",
+            xy=(x50[rule50], y50[rule50]), xytext=(0.085, 0.962), color=SECONDARY, fontsize=9,)
 ax.set_xlim(0, 0.25)
 ax.set_ylim(0.94, 1.002)
 ax.xaxis.set_major_formatter(PercentFormatter(1, decimals=0))

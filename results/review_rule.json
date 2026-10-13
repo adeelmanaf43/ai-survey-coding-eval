@@ -299,7 +299,7 @@
         1.75,
         5.26
       ],
-      "laptop_hours": 1.61
+      "laptop_hours": 1.63
     },
     "rule_50_cat": {
       "human_minutes": [
@@ -310,7 +310,7 @@
         1.69,
         5.06
       ],
-      "laptop_hours": 2.11
+      "laptop_hours": 11.89
     }
   }
 }
