@@ -23,6 +23,8 @@
 - **You have thousands of past human codes for the same question?** Train a simple classifier. It is fast, cheap and hard to beat on answers that repeat.
 - **A new question, or no past codes?** A local LLM with a careful codebook got about 95% here with no training data, and the answers never leave your machine.
 - **You need near-human quality at low cost?** Run both, and have a person check only the ~5% of answers where they disagree.
+- **You need near-human quality at low cost?** Run both, and have a person check only the ~5% of answers where they disagree.
+- **Writing a codebook for an LLM?** Put the effort into clear definitions. Here, adding example answers made no measurable difference.
 
 ## Why this matters
 
@@ -124,6 +126,21 @@ flowchart LR
 \* 38 of the 300 dev answers use wording that does not appear in waves 23–24.
 
 On dev, Llama matched the classifier's accuracy and led on macro-F1 and on new answers. The test set narrowed or reversed those leads (see finding 3 above). With only 38 new dev answers, Llama's lead there amounted to 3 answers (12 categories) and 1 answer (50 categories).
+
+### Do the codebook's examples help? (prompt comparison)
+
+Every category in the codebooks has a definition and one or two short example answers (25 examples for 12 categories, 97 for 50). To measure what the examples add, I ran a second prompt on the 300 dev answers: **prompt A**, identical to the prompt behind all the results above (**prompt B**) except that the examples are removed. Before the run, I recorded the plan, including that prompt B stays the method whatever prompt A scores (D-023).
+
+| Dev set (300 answers)                       | 12 categories | 50 categories |
+| ------------------------------------------- | ------------- | ------------- |
+| Accuracy, prompt A (definitions only)       | 97.0%         | 96.0%         |
+| Accuracy, prompt B (definitions + examples) | 96.7%         | 96.3%         |
+| Same code from both prompts                 | 99%           | 98%           |
+| Only A right / only B right                 | 1 / 0         | 2 / 3         |
+| McNemar's exact test                        | p = 1.0       | p = 1.0       |
+| Prompt length, A / B (tokens)               | 447 / 591     | 1,347 / 1,952 |
+
+**The examples made no measurable difference.** Both prompts gave the same code to 98–99% of the answers, and neither was more accurate. The examples were paraphrased from these same dev answers, so this test favoured prompt B, and it still didn't win: for this model and question, the definitions do the work. Macro-F1 on 50 categories looks better for prompt B (80.4% against 72.4%), but that gap comes from 3 answers in categories with only one or two dev answers each, so I don't read it as a real difference. For the same reason, I did not spend another 5 hours running prompt A on the test set (D-024). The limits: one model, one question and 300 answers.
 
 ## Privacy and data handling
 
