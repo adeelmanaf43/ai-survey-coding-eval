@@ -22,12 +22,18 @@ with open("results/human_benchmark.json") as f:
     # your average time per answer (D-019)
     human_seconds = json.load(f)["seconds_mean"]
 
-# Llama's laptop time per answer: the mean, because cost depends on total time (D-019)
-llm_seconds = {f"{s}_cat": pd.read_csv(f"data/processed/llm_{SPLIT}_{s}.csv")["seconds"].mean()
-               for s in ("12", "50")}
+# Llama's laptop time per answer: the mean, because cost depends on total time (D-019).
+# llm_code.py gives up on a call after 600 s, so a longer time means the laptop was asleep
+# during that answer, not working: leave those answers out (D-022)
+llm_seconds, llm_left_out = {}, {}
+for s in ("12", "50"):
+    sec = pd.read_csv(f"data/processed/llm_{SPLIT}_{s}.csv")["seconds"]
+    llm_seconds[f"{s}_cat"] = sec[sec <= 600].mean()
+    llm_left_out[f"{s}_cat"] = int((sec > 600).sum())
 
 results = {"assumptions": {"person_checking_gives_the_BES_code": True, "human_seconds_per_answer": human_seconds,
-                           "hourly_cost_gbp": HOURLY_COST_GBP, "hard_case_factor": HARD_FACTOR}}
+                           "hourly_cost_gbp": HOURLY_COST_GBP, "hard_case_factor": HARD_FACTOR,
+                           "llm_answers_left_out_over_600_s": llm_left_out}}
 curves = {}
 for scheme in ("12", "50"):
     llm = pd.read_csv(

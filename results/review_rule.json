@@ -3,7 +3,11 @@
     "person_checking_gives_the_BES_code": true,
     "human_seconds_per_answer": 8.1,
     "hourly_cost_gbp": 15,
-    "hard_case_factor": 3
+    "hard_case_factor": 3,
+    "llm_answers_left_out_over_600_s": {
+      "12_cat": 0,
+      "50_cat": 1
+    }
   },
   "12_cat": {
     "rule": {
@@ -310,7 +314,7 @@
         1.69,
         5.06
       ],
-      "laptop_hours": 11.89
+      "laptop_hours": 2.17
     }
   }
 }
