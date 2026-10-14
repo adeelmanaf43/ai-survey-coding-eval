@@ -1,4 +1,4 @@
-# Error analysis: where Llama's codes differ from the BES codes on the test set (D-025).
+# Error analysis (roadmap H6): where Llama's codes differ from the BES codes on the test set (D-025).
 #   python scripts\error_analysis.py          confusion matrices + a blind reading sheet of 30 mistakes
 #   python scripts\error_analysis.py --count  after you've filled in the sheet: count your verdicts
 # The printed output and the files in results/ hold category names and counts only. The reading sheet
@@ -14,8 +14,6 @@ SPLIT, SEED, N_READ = "test", 2026, 30
 SHEET = Path("data/processed/errors_to_read.csv")
 # which code is the BES one: don't open it
 KEY = Path("data/processed/errors_key.csv")
-# X right, Y right, both acceptable, neither right
-VERDICTS = ["X", "Y", "B", "N"]
 WHY = {"1": "several issues", "2": "vague answer",
        "3": "overlapping categories", "4": "clear error"}
 
@@ -78,14 +76,23 @@ if not args.count:
 else:
     sheet = pd.read_csv(SHEET, dtype=str, keep_default_na=False, sep=None, engine="python",
                         encoding="utf-8-sig", encoding_errors="replace")
-    df = sheet[["n", "verdict", "why"]].merge(
-        pd.read_csv(KEY, dtype=str), on="n")
-    df["verdict"] = df["verdict"].str.strip().str.upper().str[:1]
-    df["why"] = df["why"].str.strip().str[:1]
-    todo = df[~df["verdict"].isin(VERDICTS) | ~df["why"].isin(list(WHY))]
-    if len(todo):
-        raise SystemExit(
-            f"Rows {', '.join(todo['n'])} still need a verdict (X, Y, B or N) and a why (1-4).")
+    df = sheet.merge(pd.read_csv(KEY, dtype=str), on="n")
+    # A verdict can be a letter (X, Y, B, N) or the name of the code you chose, e.g. "Health"
+    v = df["verdict"].str.strip().str.lower()
+    df["verdict"] = np.select([v == df["code_X"].str.strip().str.lower(), v == df["code_Y"].str.strip().str.lower(),
+                               v.isin(["x", "y", "b", "n"]), v == "both", v == "neither"],
+                              ["X", "Y", v.str.upper(), "B", "N"], "")
+    df["why"] = df["why"].str.strip()
+    bad_verdict = df.loc[df["verdict"] == "", "n"]
+    bad_why = df.loc[~df["why"].isin(list(WHY)), "n"]
+    if len(bad_verdict) or len(bad_why):
+        if len(bad_verdict):
+            print(
+                f"Rows {', '.join(bad_verdict)}: verdict must be X, Y, B, N or the name of the code you chose")
+        if len(bad_why):
+            print(f"Rows {', '.join(bad_why)}: why must be a single number from 1 to 4"
+                  " (keep your own reasons in a separate 'note' column)")
+        raise SystemExit("Fix those cells, save, and run this again.")
     # Unblind: was the code you picked the BES code or Llama's?
     df["result"] = np.select([df["verdict"] == "B", df["verdict"] == "N", df["verdict"] == df["bes_is"]],
                              ["both fine", "neither", "BES right"], "Llama right")
