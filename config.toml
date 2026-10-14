@@ -1,0 +1,38 @@
+# Project settings in one place. Paths are relative to this folder.
+seed = 2026
+schemes = ["12", "50"]   # the BES 12- and 50-category schemes
+
+[paths]
+strings = "data/raw/BES2024_W30Strings_v30.1.sav"   # BES open-ended answers
+panel = "data/raw/BES2024_W31_Panel_v31.05.sav"     # BES panel file with the human codes
+processed = "data/processed"   # git-ignored: evaluation sets and answer-level codes
+results = "results"            # committed: aggregate numbers and the chart
+codebooks = "codebooks"
+
+[eval_set]               # stratified by 50-category code (D-006)
+wave = 25                # May 2023 (D-002)
+dev = 300
+test = 1200
+
+[baseline]
+train_waves = [23, 24]   # the two human-coded waves just before wave 25 (D-010)
+
+[llm]                    # Llama 3.1 8B through Ollama, temperature 0, seed 2026 (D-012)
+model = "llama3.1:latest"
+url = "http://localhost:11434/api/chat"
+temperature = 0
+num_ctx = 8192
+num_gpu = 0              # CPU only (D-017)
+num_predict = 50
+timeout_seconds = 600    # a call silent this long is retried; longer recorded times are pauses (D-022)
+frozen_versions = { "12" = "459a2e64", "50" = "b0fcfe68" }   # prompt B, frozen (D-013)
+
+[bootstrap]
+resamples = 1000         # D-020
+
+[cost]
+hourly_gbp = 15          # assumption: one hour of a human coder
+hard_case_factor = 3     # assumption: checking a disagreement may take 3x an average answer
+
+[review]
+sheet_size = 30          # blind review of Llama's mistakes (D-025)

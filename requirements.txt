@@ -3,3 +3,5 @@ pyreadstat
 scikit-learn
 requests
 matplotlib
+pytest
+tomli; python_version < "3.11"
