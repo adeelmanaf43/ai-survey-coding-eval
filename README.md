@@ -143,6 +143,28 @@ Every category in the codebooks has a definition and one or two short example an
 
 **The examples made no measurable difference.** Both prompts gave the same code to 98–99% of the answers, and neither was more accurate. The examples were paraphrased from these same dev answers, so this test favoured prompt B, and it still didn't win: for this model and question, the definitions do the work. Macro-F1 on 50 categories looks better for prompt B (80.4% against 72.4%), but that gap comes from 3 answers in categories with only one or two dev answers each, so I don't read it as a real difference. For the same reason, I did not spend another 5 hours running prompt A on the test set (D-024). The limits: one model, one question and 300 answers.
 
+## How this compares with other studies
+
+Studies of AI coding of open-ended answers range from "close to a human" to "use with caution". The differences say more about the task than about AI in general.
+
+| Study                       | Answers                                                               | Categories | Codes per answer | AI and setup                                                                                 | Result                                                                                                           |
+| --------------------------- | --------------------------------------------------------------------- | ---------- | ---------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **This project**            | BES "most important issue", May 2023; 1,200 test answers              | 12 and 50  | one              | Llama 3.1 8B on a laptop, codebook only                                                      | 95.4% and 95.9% accuracy (macro-F1 78% and 74%)                                                                  |
+| Mellon et al. (2024)        | BES "most important issue"                                            | 50         | one              | six LLMs with a few examples; best: Claude-1.3                                               | 93.9% accuracy, against 94.7% for a second human coder; on new wording 80.9% (human 88.6%)                       |
+| von der Heyde et al. (2025) | German panel survey: why people take part; 5,072 answers              | 22         | one              | GPT-4o, Llama 3.2 3B and Mistral NeMo 12B, with and without examples; GPT-4o also fine-tuned | GPT-4o about 80% accuracy (macro-F1 about 0.70); small open models 55–77%; fine-tuned GPT-4o 95% (macro-F1 0.87) |
+| Langer Research (2025)      | US education poll: what is going well in local schools; 1,166 answers | 45         | several          | Claude Opus 4 in a web interface                                                             | every code matched the human coding on 29% of answers                                                            |
+
+**Why the results differ**
+
+- **The answers.** "Most important issue" answers are short and repetitive: 59% are about the economy, and 89% of my test answers repeat earlier wording. Reasons for taking part in a survey, or comments on schools that mix praise with criticism, are longer and subtler. Even here, the hard cases were answers naming several issues and vague answers (finding 6).
+- **One code or several.** The Langer pilot allowed several codes per answer and counted a match only when every code agreed, which is far stricter than accuracy with one code per answer.
+- **The metric.** The same Llama predictions score 95.4% accuracy but 78.3% macro-F1, because macro-F1 gives rare categories equal weight. A study that reports macro-F1 looks much worse than one that reports accuracy, even at similar quality.
+- **The model and the setup.** Small open models did worst in the German study, but a 2024 8B model with a careful codebook reached the level of the best 2023 cloud model in Mellon et al. on the same question (95.9% against 93.9%, on different samples). Examples matter less as models and definitions improve: in the German study they lifted the 3B model from 58% to 74% but the 12B model only from 74% to 77%, and here they made no difference (prompt comparison). Training on past codes helped most: fine-tuning took GPT-4o from about 80% to 95%, and my classifier trained on 42,404 past codes reached 97.4%.
+- **The reference.** Human codes are not perfect. A second human coder matched the BES on 94.7% of answers, and in my blind review only 12 of Llama's 30 "mistakes" were clearly its own. Near 95%, accuracy measures agreement with one coder as much as quality.
+- **How well the categories are separated matters more than how many there are.** Llama was no worse with 50 categories than with 12 (95.9% against 95.4%), because its 12-category mistakes cluster in broad, overlapping groups.
+
+**The lesson:** a single number, whether "95% accurate" or "29% matched", means little without the question, the number of codes per answer, the metric and the reference. Test an AI coder on your own data, with a held-out test set, before trusting it.
+
 ## Privacy and data handling
 
 - **Local inference only:** every coding run uses Ollama on my own machine. No survey answers are sent to cloud AI APIs for coding.
@@ -258,6 +280,8 @@ I built this project with an AI assistant as mentor and pair programmer. I ran e
 - Fieldhouse, E., Green, J., Evans, G., Mellon, J., Prosser, C., Bailey, J., de Geus, R., Schmitt, H., van der Eijk, C., Griffiths, J., & Perrett, S. (2026). _British Election Study Internet Panel Waves 1–31_. DOI: [10.5255/UKDA-SN-8202-4](https://doi.org/10.5255/UKDA-SN-8202-4)
 - Mellon, J., Bailey, J., Scott, R., Breckwoldt, J., Miori, M., & Schmedeman, P. (2024). Do AIs know what the most important issue is? Using language models to code open-text social survey responses at scale. _Research & Politics_, 11(1). [Open access](https://orca.cardiff.ac.uk/id/eprint/177688/)
 - Baumann, J., Röttger, P., Urman, A., Wendsjö, A., Plaza-del-Arco, F. M., Gruber, J. B., & Hovy, D. (2025). _Large Language Model Hacking: Quantifying the Hidden Risks of Using LLMs for Text Annotation_. [arXiv:2509.08825](https://arxiv.org/abs/2509.08825)
+- von der Heyde, L., Haensch, A.-C., Weiß, B., & Daikeler, J. (2025). Using large language models for coding German open-ended survey responses on survey motivation. _Survey Research Methods_, 19(4), 355–370. [doi:10.18148/srm/2025.v19i4.8568](https://doi.org/10.18148/srm/2025.v19i4.8568)
+- Langer Research Associates (2025). _A Pilot Test of AI Coding of Open-Ended Survey Responses_ (white paper, 10 September 2025). [Link](https://www.langerresearch.com/white-paper_ai-coding/)
 
 ## Disclaimer and licence
 
