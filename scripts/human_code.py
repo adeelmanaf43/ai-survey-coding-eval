@@ -71,4 +71,4 @@ with open(OUT, "a", newline="", encoding="utf-8") as f:
         f.flush()   # saved after every answer
         print(f"  -> {names[int(choice) - 1]} ({seconds:.0f} s)")
 
-print(f"\nAll {N} done. Next: python scripts\\score_human.py")
+print(f"\nAll {N} done. Next: python -m coding_eval metrics")

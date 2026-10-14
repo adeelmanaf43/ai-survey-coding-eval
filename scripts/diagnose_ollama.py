@@ -16,12 +16,12 @@ HOST = "http://localhost:11434"
 MODEL = "llama3.1:latest"
 DAY1_VERSION = "0.35.0"   # the Ollama version you had on Day 1
 REAL = {"temperature": 0, "seed": 2026, "num_ctx": 8192,
-        "num_predict": 50}   # same options as llm_code.py
+        "num_predict": 50}   # the Day 1 options (config.toml now also has num_gpu = 0, D-017)
 QUESTION = ("As far as you're concerned, what is the SINGLE MOST important issue "
             "facing the country at the present time?")
 
 
-# copied from llm_code.py, so the prompt version must come out as 459a2e64
+# copied from coding_eval/llm_coder.py, so the prompt version must come out as 459a2e64
 def system_prompt(codebook):
     lines = ["You code answers to this British survey question, asked in May 2023:",
              f'"{QUESTION}"',
@@ -128,11 +128,11 @@ if worked["B"]:
     setup, change, cause = REAL, None, None
 elif worked.get("D"):
     setup, change = {
-        **REAL, "num_gpu": 0}, 'in the "options" of the payload, add  "num_gpu": 0,  before "num_predict": 50'
+        **REAL, "num_gpu": 0}, 'set  num_gpu = 0'
     cause = "the graphics card (GPU): on the CPU alone it works"
 elif worked.get("E"):
     setup, change = {
-        **REAL, "num_ctx": 4096}, 'change  "num_ctx": 8192  to  "num_ctx": 4096  (the 50-category prompt still fits)'
+        **REAL, "num_ctx": 4096}, 'change  num_ctx = 8192  to  num_ctx = 4096  (the 50-category prompt still fits)'
     cause = "memory: with a smaller context window it works"
 else:
     setup = None
@@ -210,9 +210,9 @@ elif same < 9:
 else:
     if change:
         print(f"- FIX FOUND. The crash comes from {cause}.")
-        print(f"  In scripts\\llm_code.py, {change}.")
+        print(f"  In config.toml, {change}.")
     else:
         print("- Your exact setup works now, so the crash was temporary.")
     print(f"- {same}/10 dev answers got the same code as in your dev run"
           + (", so results stay comparable." if same == 10 else ": a small difference, fine to go ahead."))
-    print("- Start the overnight run: python scripts\\llm_code.py")
+    print("- Start the overnight run: python -m coding_eval code --split test")

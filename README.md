@@ -175,6 +175,16 @@ Studies of AI coding of open-ended answers range from "close to a human" to "use
 
 ```
 ai-survey-coding-eval/
+├── coding_eval/                # the pipeline: python -m coding_eval <command>
+│   ├── __main__.py             # the commands: build, baseline, code, review-sheet, metrics
+│   ├── config.py               # reads config.toml
+│   ├── data.py                 # reads and writes files; builds the stratified dev/test split
+│   ├── baseline.py             # majority + TF-IDF baselines, seen vs new split
+│   ├── llm_coder.py            # Llama codes the answers (local, resumable, retries)
+│   ├── metrics.py              # accuracy, macro-F1, kappa, McNemar, bootstrap, review curve
+│   ├── evaluate.py             # every file in results/, from the saved codes
+│   └── review_rule.py          # review-rule curve, cost per 1,000 answers, chart
+├── tests/                      # pytest: the metrics, the frozen prompt, reading Llama's replies
 ├── codebooks/
 │   ├── codebook_12.json        # 12 categories + Uncoded: name, definition, examples
 │   └── codebook_50.json        # 49 BES categories
@@ -182,25 +192,18 @@ ai-survey-coding-eval/
 ├── docs/
 │   ├── decision_log.md         # every design decision and why
 │   └── codebook_review.md      # how the codebooks were checked against dev answers
-├── results/                    # aggregate numbers only
-│   ├── baseline_dev.json
-│   ├── baseline_test.json
-│   ├── llm_dev.json
-│   ├── llm_test.json
-│   ├── second_opinion_dev.json
-│   └── second_opinion_test.json
-├── scripts/
-│   ├── time_ollama.py          # speed test on invented answers
+├── results/                    # aggregate numbers and the chart only
+├── scripts/                    # one-off checks and tools
 │   ├── inspect_bes.py          # find the wave 25 columns (names only)
-│   ├── build_eval_set.py       # join answers to human codes; stratified dev/test split
 │   ├── check_mapping.py        # verify how the 50 categories collapse into 12
 │   ├── prepare_codebooks.py    # codebook skeletons + local example sheet
 │   ├── check_codebooks.py      # names match the data; no copied answers
-│   ├── baseline.py             # majority + TF-IDF baselines, seen vs new split
-│   ├── llm_code.py             # Llama codes the answers (local, resumable, retries)
-│   ├── score_llm.py            # compare Llama with the human codes and baselines
-│   ├── second_opinion.py       # what if a person checks only the disagreements?
-│   └── diagnose_ollama.py      # find why Ollama crashes, one setting at a time
+│   ├── time_ollama.py          # speed test on invented answers
+│   ├── diagnose_ollama.py      # find why Ollama crashes, one setting at a time
+│   ├── check_timing.py         # find answers whose recorded time includes a pause
+│   └── human_code.py           # human benchmark: code 100 test answers, blind and timed
+├── config.toml                 # every setting: file paths, seed, model options, cost assumptions
+├── pytest.ini                  # tells pytest where the tests are
 ├── LICENSE
 ├── requirements.txt
 └── README.md
@@ -212,7 +215,7 @@ ai-survey-coding-eval/
    - _Combined Wave 1–30 Internet Panel open ended response data_
    - _Combined Wave 1–31 Internet Panel_
 
-   Unzip both into `data/raw/`. The scripts expect `BES2024_W30Strings_v30.1.sav` and `BES2024_W31_Panel_v31.05.sav`. If your versions differ, edit the paths at the top of each script.
+   Unzip both into `data/raw/`. The code expects `BES2024_W30Strings_v30.1.sav` and `BES2024_W31_Panel_v31.05.sav`. If your versions differ, change the paths in `config.toml` and at the top of the tools in `scripts/`.
 
 2. **Set up Python.**
    ```bash
@@ -224,19 +227,31 @@ ai-survey-coding-eval/
 4. **Build the evaluation set and check the codebooks.**
    ```bash
    python scripts/inspect_bes.py
-   python scripts/build_eval_set.py
+   python -m coding_eval build
    python scripts/check_mapping.py
    python scripts/check_codebooks.py
    ```
-5. **Dev run.** The four evaluation scripts are committed with `SPLIT = "test"`, as used for the final run. Set it to `"dev"` at the top of `baseline.py`, `llm_code.py`, `score_llm.py` and `second_opinion.py`, then run:
+5. **Dev run.**
    ```bash
-   python scripts/baseline.py
-   python scripts/llm_code.py        # about 70 minutes for 300 dev answers on a 16 GB laptop
-   python scripts/score_llm.py
-   python scripts/second_opinion.py
+   python -m coding_eval baseline --split dev
+   python -m coding_eval code --split dev              # about 70 minutes for 300 dev answers on a 16 GB laptop
+   python -m coding_eval code --split dev --prompt A   # optional: the prompt comparison (definitions only)
    ```
-6. **Final run on the test set.** Set `SPLIT = "test"` in the same four scripts and run them again. Coding 1,200 answers in both schemes takes about 5 hours.
-7. **If Ollama crashes,** run `python scripts/diagnose_ollama.py`. It tries one setting at a time and suggests a fix.
+6. **Final run on the test set, once.** Coding 1,200 answers in both schemes takes about 5 hours.
+   ```bash
+   python -m coding_eval baseline --split test
+   python -m coding_eval code --split test
+   python scripts/human_code.py              # optional: code 100 test answers yourself, blind and timed
+   python -m coding_eval review-sheet        # optional: a blind reading sheet of 30 of Llama's mistakes
+   ```
+   The reading sheet holds answer text, so it stays in `data/processed`. Fill it in on your own machine.
+7. **Compute every result and run the tests.**
+   ```bash
+   python -m coding_eval metrics             # rewrites every file in results/ from the saved codes
+   python -m pytest
+   ```
+   On my saved codes, `metrics` reproduces every committed file in `results/` exactly (`git status` shows no changes). The baseline files `baseline_dev.json` and `baseline_test.json` come from the `baseline` command, because they need the training data.
+8. **If Ollama crashes,** run `python scripts/diagnose_ollama.py`. It tries one setting at a time and suggests a fix.
 
 ## Lessons learned
 
