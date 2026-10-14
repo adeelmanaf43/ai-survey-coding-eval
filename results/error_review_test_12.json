@@ -1,0 +1,36 @@
+{
+  "split": "test",
+  "scheme": "12",
+  "reviewed": 30,
+  "verdicts": {
+    "BES right": 12,
+    "Llama right": 13,
+    "both fine": 5,
+    "neither": 0
+  },
+  "why": {
+    "several issues": 14,
+    "vague answer": 11,
+    "overlapping categories": 5
+  },
+  "why_by_verdict": {
+    "overlapping categories": {
+      "BES right": 0,
+      "Llama right": 0,
+      "both fine": 5,
+      "neither": 0
+    },
+    "several issues": {
+      "BES right": 7,
+      "Llama right": 7,
+      "both fine": 0,
+      "neither": 0
+    },
+    "vague answer": {
+      "BES right": 5,
+      "Llama right": 6,
+      "both fine": 0,
+      "neither": 0
+    }
+  }
+}

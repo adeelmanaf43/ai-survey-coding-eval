@@ -96,6 +96,7 @@ flowchart LR
 4. **Llama is more accurate with 50 categories than with 12** (95.9% against 95.4%), even though 50 categories is the harder task. Many of its 12-category mistakes put answers into the broad "Austerity/spending" and "Inequality" groups (at least 13 and 10 of its 55 mistakes). Each of the 50 categories belongs to exactly one of the 12 groups, so grouping Llama's 50-category codes would score at least 95.9% on the 12-category scheme. That's worth testing on fresh data.
 5. **Asking the model "are you sure?" still doesn't work.** Llama marked only 2 of its 2,400 test codes as uncertain (both were right), and none of its 600 dev codes. Disagreement with a second method is a much better warning sign (next section).
 6. **Both methods are close to the ceiling.** In Mellon et al. (2024), a second human coder agreed with the BES coders on 94.7% of a random sample, so some of the remaining "errors" are likely debatable human codes.
+7. **Most of Llama's "mistakes" are judgment calls, not misreadings.** In a blind review of 30 random Llama mistakes on 12 categories (D-025), I saw the two codes in random order without knowing which was the BES code. I sided with the BES code on 12, with Llama's code on 13, and judged both acceptable on 5. None was a plain misreading: 14 answers named several issues, 11 were vague, and 5 fit two overlapping categories. For comparison, a second human coder agreed with the BES coders on 94.7% of answers in Mellon et al. (2024), close to Llama's 95.4%. With one reviewer and 30 answers, this is an indication, not a corrected score.
 
 ## Second opinion: use both, check only where they disagree
 
@@ -231,7 +232,7 @@ ai-survey-coding-eval/
 ## Next steps
 
 - **Code fine, then group:** derive the 12 categories from Llama's 50-category codes, and test it on another human-coded wave, since this test set has now been used.
-- **Blind review:** for the disagreements and the shared mistakes, judge which code is right without knowing where it came from. Some "errors" are probably debatable human codes.
+- **Blind review, extended:** a second reviewer, and the shared mistakes where Llama and the classifier agree but the BES code differs.
 - **A realistic second opinion:** measure how often a real reviewer matches the BES coder. The 99% assumes they always do.
 - **Robustness:** try a second local model and prompt variants, because a single configuration can mislead (Baumann et al., 2025).
 
