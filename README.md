@@ -95,8 +95,7 @@ flowchart LR
 3. **The dev set flattered Llama.** On dev, Llama tied the classifier on accuracy and led on macro-F1. On test, that lead disappeared. I had refined the codebook while reading dev mistakes, and 300 answers is a noisy sample. That's exactly why the test set stayed untouched until one final run.
 4. **Llama is more accurate with 50 categories than with 12** (95.9% against 95.4%), even though 50 categories is the harder task. Many of its 12-category mistakes put answers into the broad "Austerity/spending" and "Inequality" groups (at least 13 and 10 of its 55 mistakes). Each of the 50 categories belongs to exactly one of the 12 groups, so grouping Llama's 50-category codes would score at least 95.9% on the 12-category scheme. That's worth testing on fresh data.
 5. **Asking the model "are you sure?" still doesn't work.** Llama marked only 2 of its 2,400 test codes as uncertain (both were right), and none of its 600 dev codes. Disagreement with a second method is a much better warning sign (next section).
-6. **Both methods are close to the ceiling.** In Mellon et al. (2024), a second human coder agreed with the BES coders on 94.7% of a random sample, so some of the remaining "errors" are likely debatable human codes.
-7. **Most of Llama's "mistakes" are judgment calls, not misreadings.** In a blind review of 30 random Llama mistakes on 12 categories (D-025), I saw the two codes in random order without knowing which was the BES code. I sided with the BES code on 12, with Llama's code on 13, and judged both acceptable on 5. None was a plain misreading: 14 answers named several issues, 11 were vague, and 5 fit two overlapping categories. For comparison, a second human coder agreed with the BES coders on 94.7% of answers in Mellon et al. (2024), close to Llama's 95.4%. With one reviewer and 30 answers, this is an indication, not a corrected score.
+6. **Most of Llama's "mistakes" are judgment calls, not misreadings.** In a blind review of 30 random Llama mistakes on 12 categories (D-025), I saw the two codes in random order without knowing which was the BES code. I sided with the BES code on 12, with Llama's code on 13, and judged both acceptable on 5. None was a plain misreading: 14 answers named several issues, 11 were vague, and 5 fit two overlapping categories. For comparison, a second human coder agreed with the BES coders on 94.7% of answers in Mellon et al. (2024), close to Llama's 95.4%. With one reviewer and 30 answers, this is an indication, not a corrected score.
 
 ## Second opinion: use both, check only where they disagree
 
@@ -171,7 +170,6 @@ Studies of AI coding of open-ended answers range from "close to a human" to "use
 - **Nothing sensitive is committed:** raw BES files, answer text and respondent IDs stay in `data/`, which git ignores. The repository holds only code, codebooks and aggregate results, and the scripts print counts and metrics, never answers.
 - **Data minimisation:** each script reads only the columns it needs, for example 3 of the panel file's 13,381.
 - **Licence:** the BES terms allow research use and require attribution. I have contacted the BES team to confirm that a public portfolio project fits those terms.
-- **Transparency:** the decision log records one process deviation during development (D-009), when a small set of short dev answers was shared with an AI assistant.
 
 ## Repository structure
 
