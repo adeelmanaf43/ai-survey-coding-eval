@@ -57,7 +57,14 @@ def training_answers():
 def train_and_predict(split="test"):
     """Train on waves 23-24, code one split, and save the results and the predictions."""
     train = training_answers()
-    # everyone in the evaluation set is left out of training by design (D-010)
+    # Leave out everyone in the evaluation set (dev and test), so the classifier never
+    # sees their earlier answers (D-010)
+    evaluation_ids = set(eval_set("dev")["id"]) | set(eval_set("test")["id"])
+    left_out = train["id"].isin(evaluation_ids)
+    print(
+        f"Left out {left_out.sum():,} training answers from {train.loc[left_out, 'id'].nunique():,}"
+        f"of the {len(evaluation_ids):,} evaluation respondents")
+    train = train[~left_out]
     evalset = eval_set(split)
 
     rows = []

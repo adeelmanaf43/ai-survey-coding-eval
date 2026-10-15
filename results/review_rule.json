@@ -79,8 +79,8 @@
       },
       {
         "checked_share": 0.12,
-        "machine_share_accuracy": 1.0,
-        "overall_accuracy_best_case": 1.0
+        "machine_share_accuracy": 0.999,
+        "overall_accuracy_best_case": 0.999
       },
       {
         "checked_share": 0.13,
@@ -151,8 +151,8 @@
   },
   "50_cat": {
     "rule": {
-      "checked": 60,
-      "checked_share": 0.05,
+      "checked": 62,
+      "checked_share": 0.052,
       "machine_share_accuracy": 0.987,
       "overall_accuracy_best_case": 0.988
     },
@@ -164,18 +164,18 @@
       },
       {
         "checked_share": 0.01,
-        "machine_share_accuracy": 0.962,
-        "overall_accuracy_best_case": 0.962
+        "machine_share_accuracy": 0.963,
+        "overall_accuracy_best_case": 0.963
       },
       {
         "checked_share": 0.02,
-        "machine_share_accuracy": 0.967,
-        "overall_accuracy_best_case": 0.968
+        "machine_share_accuracy": 0.966,
+        "overall_accuracy_best_case": 0.967
       },
       {
         "checked_share": 0.03,
-        "machine_share_accuracy": 0.972,
-        "overall_accuracy_best_case": 0.972
+        "machine_share_accuracy": 0.973,
+        "overall_accuracy_best_case": 0.973
       },
       {
         "checked_share": 0.04,
@@ -184,8 +184,8 @@
       },
       {
         "checked_share": 0.05,
-        "machine_share_accuracy": 0.987,
-        "overall_accuracy_best_case": 0.988
+        "machine_share_accuracy": 0.985,
+        "overall_accuracy_best_case": 0.986
       },
       {
         "checked_share": 0.06,
@@ -204,13 +204,13 @@
       },
       {
         "checked_share": 0.09,
-        "machine_share_accuracy": 0.992,
+        "machine_share_accuracy": 0.991,
         "overall_accuracy_best_case": 0.992
       },
       {
         "checked_share": 0.1,
-        "machine_share_accuracy": 0.994,
-        "overall_accuracy_best_case": 0.994
+        "machine_share_accuracy": 0.993,
+        "overall_accuracy_best_case": 0.993
       },
       {
         "checked_share": 0.11,
@@ -229,8 +229,8 @@
       },
       {
         "checked_share": 0.14,
-        "machine_share_accuracy": 0.999,
-        "overall_accuracy_best_case": 0.999
+        "machine_share_accuracy": 0.997,
+        "overall_accuracy_best_case": 0.998
       },
       {
         "checked_share": 0.15,
@@ -307,12 +307,12 @@
     },
     "rule_50_cat": {
       "human_minutes": [
-        6.8,
-        20.2
+        7.0,
+        21.1
       ],
       "gbp": [
-        1.69,
-        5.06
+        1.75,
+        5.26
       ],
       "laptop_hours": 2.17
     }

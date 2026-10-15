@@ -5,7 +5,7 @@
     23,
     24
   ],
-  "n_train": 42404,
+  "n_train": 40956,
   "results": [
     {
       "scheme": 12,
@@ -18,7 +18,7 @@
       "scheme": 12,
       "method": "TF-IDF + logistic regression",
       "accuracy": 0.974,
-      "macro_f1": 0.801,
+      "macro_f1": 0.838,
       "kappa": 0.958
     },
     {
@@ -31,20 +31,20 @@
     {
       "scheme": 50,
       "method": "TF-IDF + logistic regression",
-      "accuracy": 0.96,
-      "macro_f1": 0.741,
-      "kappa": 0.952
+      "accuracy": 0.958,
+      "macro_f1": 0.73,
+      "kappa": 0.949
     }
   ],
   "seen_vs_new": {
-    "seen_share": 0.891,
+    "seen_share": 0.889,
     "12_cat": {
       "seen": 0.994,
-      "new": 0.809
+      "new": 0.812
     },
     "50_cat": {
       "seen": 0.983,
-      "new": 0.771
+      "new": 0.752
     }
   }
 }
