@@ -13,9 +13,9 @@
 **The answer** (test set: 1,200 answers from May 2023):
 
 - **Close, with no training data at all.** Given only a codebook, Llama 3.1 8B gave the same code as the BES's human coders for 95.4% of answers on 12 categories and 95.9% on 50 (Cohen's κ 0.93–0.95).
-- **A simple classifier trained on 42,404 past human codes did as well or better:** 97.4% and 96.0%. Its lead comes from answers it had effectively seen before: 89% of test answers repeat earlier wording word for word. On new wording, the two were level on 12 categories, and Llama was ahead on 50, though with only 131 new answers that gap could be chance.
+- **A simple classifier trained on 40,956 past human codes did as well or better:** 97.4% and 95.8%. Its lead comes from answers it had effectively seen before: 89% of test answers repeat earlier wording word for word. On new wording, the two were level on 12 categories, and Llama was ahead on 50, though with only 133 new answers that gap could be chance.
 - **Together, with a quick human check, they beat either one.** The two methods agree on 95% of answers, and those agreed codes are 98.7–99.2% correct. If a person checks only the other 5%, accuracy rises to about 99% (best case).
-- **The development set flattered Llama.** On the 300 dev answers I used to refine the codebook, Llama tied the classifier. The untouched test set gave the honest answer.
+- **The development set flattered Llama.** On the 300 dev answers I used to refine the codebook, Llama was level with the classifier. The untouched test set gave the honest answer.
 - **It all ran locally** on a 16 GB laptop: about 6–8 seconds per answer, no API costs, and 0 invalid replies in 3,000 calls. No survey answers went to cloud AI services for coding.
 
 ## What I'd tell a survey team
@@ -59,7 +59,7 @@ flowchart LR
 1. **Evaluation set.** From all wave 25 answers that have text and a human code, I drew a stratified random sample (seed 2026): **300 dev answers** for building and tuning, and **1,200 test answers** kept untouched until the final run.
 2. **Baselines.**
    - _Always guess the most common category._ This shows how little accuracy means on imbalanced data.
-   - _TF-IDF + logistic regression._ It is trained on 42,404 human-coded answers from **waves 23–24**. Every evaluation respondent is left out, so the model never sees their earlier answers. It uses character n-grams (2–5 letters), so typos still match, with default settings.
+   - _TF-IDF + logistic regression._ It is trained on 40,956 human-coded answers from **waves 23–24**. Every evaluation respondent is left out, so the model never sees their earlier answers. (The first runs missed this step; fixing it changed the classifier's test accuracy by at most 0.2 points, D-027.) It uses character n-grams (2–5 letters), so typos still match, with default settings.
 3. **LLM coder.** Llama 3.1 8B Instruct (`llama3.1:latest`, 4.9 GB) runs through Ollama with nothing but the codebook:
    - **Answers are restricted to codebook names** through Ollama's structured outputs (a JSON schema with an `enum`), so every reply is a valid category. There were 0 invalid replies in 3,000 calls.
    - **The codebook sits in the system message, and each scheme runs separately.** Ollama reuses the already-processed codebook, so after a slow first call each answer takes about 6–8 seconds.
@@ -80,19 +80,19 @@ flowchart LR
 | Scheme        | Method                       | Training data        | Accuracy | Macro-F1 | Cohen's κ | Accuracy on new answers\* |
 | ------------- | ---------------------------- | -------------------- | -------- | -------- | --------- | ------------------------- |
 | 12 categories | Always "Economy"             | –                    | 59.0%    | 5.7%     | 0.00      | –                         |
-|               | TF-IDF + logistic regression | 42,404 coded answers | 97.4%    | 80.1%    | 0.96      | 80.9%                     |
-|               | Llama 3.1 8B, codebook only  | none                 | 95.4%    | 78.3%    | 0.93      | 80.2%                     |
+|               | TF-IDF + logistic regression | 40,956 coded answers | 97.4%    | 83.8%    | 0.96      | 81.2%                     |
+|               | Llama 3.1 8B, codebook only  | none                 | 95.4%    | 78.3%    | 0.93      | 80.5%                     |
 | 50 categories | Always "Living costs"        | –                    | 33.8%    | 1.3%     | 0.00      | –                         |
-|               | TF-IDF + logistic regression | 42,404 coded answers | 96.0%    | 74.1%    | 0.95      | 77.1%                     |
-|               | Llama 3.1 8B, codebook only  | none                 | 95.9%    | 73.8%    | 0.95      | 83.2%                     |
+|               | TF-IDF + logistic regression | 40,956 coded answers | 95.8%    | 73.0%    | 0.95      | 75.2%                     |
+|               | Llama 3.1 8B, codebook only  | none                 | 95.9%    | 73.8%    | 0.95      | 82.7%                     |
 
-\* 131 of the 1,200 test answers (11%) use wording that does not appear in waves 23–24. Each overall accuracy is uncertain by about ±1 percentage point (95% interval). With only 131 new answers, the new-answer figures are uncertain by about ±7 points.
+\* 133 of the 1,200 test answers (11%) use wording that does not appear in waves 23–24. Each overall accuracy is uncertain by about ±1 percentage point (95% interval). With only 133 new answers, the new-answer figures are uncertain by about ±7 points.
 
 **What the test results show**
 
-1. **On 12 categories the classifier is better, and not by chance.** Of the 58 answers where exactly one method was right, the classifier was right on 41 and Llama on 17 (McNemar's exact test, p = 0.002). On 50 categories it's a tie: 27 against 26 (p = 1.0).
-2. **The classifier's lead comes from answers it has seen before.** 1,069 of the 1,200 answers (89%) appear word for word in waves 23–24, and on those the classifier was 99.4% accurate on 12 categories. On the 131 new answers, the two methods were level (80.9% and 80.2%). On 50 categories, Llama was ahead on new answers (83.2% against 77.1%), but that gap is within the uncertainty. The classifier's 77–81% on new wording is in line with the 77.8% that Mellon et al. (2024) report for a supervised model on new text.
-3. **The dev set flattered Llama.** On dev, Llama tied the classifier on accuracy and led on macro-F1. On test, that lead disappeared. I had refined the codebook while reading dev mistakes, and 300 answers is a noisy sample. That's exactly why the test set stayed untouched until one final run.
+1. **On 12 categories the classifier is better, and not by chance.** Of the 58 answers where exactly one method was right, the classifier was right on 41 and Llama on 17 (McNemar's exact test, p = 0.002). On 50 categories it's a tie: 26 against 28 (p = 0.9).
+2. **The classifier's lead comes from answers it has seen before.** 1,067 of the 1,200 answers (89%) appear word for word in waves 23–24, and on those the classifier was 99.4% accurate on 12 categories. On the 133 new answers, the two methods were level (81.2% and 80.5%). On 50 categories, Llama was ahead on new answers (82.7% against 75.2%), but that gap is within the uncertainty. The classifier's 75–81% on new wording is in line with the 77.8% that Mellon et al. (2024) report for a supervised model on new text.
+3. **The dev set flattered Llama.** On dev, Llama was level with the classifier on accuracy (one answer ahead in each scheme) and led on macro-F1. On test, that lead disappeared. I had refined the codebook while reading dev mistakes, and 300 answers is a noisy sample. That's exactly why the test set stayed untouched until one final run.
 4. **Llama is more accurate with 50 categories than with 12** (95.9% against 95.4%), even though 50 categories is the harder task. Many of its 12-category mistakes put answers into the broad "Austerity/spending" and "Inequality" groups (at least 13 and 10 of its 55 mistakes). Each of the 50 categories belongs to exactly one of the 12 groups, so grouping Llama's 50-category codes would score at least 95.9% on the 12-category scheme. That's worth testing on fresh data.
 5. **Asking the model "are you sure?" still doesn't work.** Llama marked only 2 of its 2,400 test codes as uncertain (both were right), and none of its 600 dev codes. Disagreement with a second method is a much better warning sign (next section).
 6. **Most of Llama's "mistakes" are judgment calls, not misreadings.** In a blind review of 30 random Llama mistakes on 12 categories (D-025), I saw the two codes in random order without knowing which was the BES code. I sided with the BES code on 12, with Llama's code on 13, and judged both acceptable on 5. None was a plain misreading: 14 answers named several issues, 11 were vague, and 5 fit two overlapping categories. For comparison, a second human coder agreed with the BES coders on 94.7% of answers in Mellon et al. (2024), close to Llama's 95.4%. With one reviewer and 30 answers, this is an indication, not a corrected score.
@@ -101,10 +101,10 @@ flowchart LR
 
 | Test set (1,200 answers)                             | 12 categories     | 50 categories     |
 | ---------------------------------------------------- | ----------------- | ----------------- |
-| Llama and the classifier give the same code          | 1,137 (95%)       | 1,140 (95%)       |
+| Llama and the classifier give the same code          | 1,137 (95%)       | 1,138 (95%)       |
 | ...and that code matches the BES coder               | 99.2%             | 98.7%             |
-| Disagreements a person would check                   | 63 (5%)           | 60 (5%)           |
-| ...right code from: classifier / Llama / neither     | 41 / 17 / 5       | 27 / 26 / 7       |
+| Disagreements a person would check                   | 63 (5%)           | 62 (5%)           |
+| ...right code from: classifier / Llama / neither     | 41 / 17 / 5       | 26 / 28 / 8       |
 | Llama's mistakes that land among the checked answers | 46 of 55          | 34 of 49          |
 | **Accuracy: Llama alone → with the check**           | **95.4% → 99.2%** | **95.9% → 98.8%** |
 
@@ -117,15 +117,15 @@ flowchart LR
 | Scheme        | Method                       | Training data        | Accuracy | Macro-F1 | Cohen's κ | Accuracy on new answers\* |
 | ------------- | ---------------------------- | -------------------- | -------- | -------- | --------- | ------------------------- |
 | 12 categories | Always "Economy"             | –                    | 59.0%    | 6.2%     | 0.00      | –                         |
-|               | TF-IDF + logistic regression | 42,404 coded answers | 96.7%    | 70.9%    | 0.95      | 78.9%                     |
+|               | TF-IDF + logistic regression | 40,956 coded answers | 96.3%    | 70.4%    | 0.94      | 78.9%                     |
 |               | Llama 3.1 8B, codebook only  | none                 | 96.7%    | 78.6%    | 0.95      | 86.8%                     |
 | 50 categories | Always "Living costs"        | –                    | 33.7%    | 1.7%     | 0.00      | –                         |
-|               | TF-IDF + logistic regression | 42,404 coded answers | 96.3%    | 76.7%    | 0.96      | 81.6%                     |
+|               | TF-IDF + logistic regression | 40,956 coded answers | 96.0%    | 76.0%    | 0.95      | 78.9%                     |
 |               | Llama 3.1 8B, codebook only  | none                 | 96.3%    | 80.4%    | 0.96      | 84.2%                     |
 
 \* 38 of the 300 dev answers use wording that does not appear in waves 23–24.
 
-On dev, Llama matched the classifier's accuracy and led on macro-F1 and on new answers. The test set narrowed or reversed those leads (see finding 3 above). With only 38 new dev answers, Llama's lead there amounted to 3 answers (12 categories) and 1 answer (50 categories).
+On dev, Llama was level with the classifier on accuracy (one answer ahead in each scheme) and led on macro-F1 and on new answers. The test set narrowed or reversed those leads (see finding 3 above). With only 38 new dev answers, Llama's lead there amounted to 3 answers (12 categories) and 2 answers (50 categories).
 
 ### Do the codebook's examples help? (prompt comparison)
 
@@ -158,7 +158,7 @@ Studies of AI coding of open-ended answers range from "close to a human" to "use
 - **The answers.** "Most important issue" answers are short and repetitive: 59% are about the economy, and 89% of my test answers repeat earlier wording. Reasons for taking part in a survey, or comments on schools that mix praise with criticism, are longer and subtler. Even here, the hard cases were answers naming several issues and vague answers (finding 6).
 - **One code or several.** The Langer pilot allowed several codes per answer and counted a match only when every code agreed, which is far stricter than accuracy with one code per answer.
 - **The metric.** The same Llama predictions score 95.4% accuracy but 78.3% macro-F1, because macro-F1 gives rare categories equal weight. A study that reports macro-F1 looks much worse than one that reports accuracy, even at similar quality.
-- **The model and the setup.** Small open models did worst in the German study, but a 2024 8B model with a careful codebook reached the level of the best 2023 cloud model in Mellon et al. on the same question (95.9% against 93.9%, on different samples). Examples matter less as models and definitions improve: in the German study they lifted the 3B model from 58% to 74% but the 12B model only from 74% to 77%, and here they made no difference (prompt comparison). Training on past codes helped most: fine-tuning took GPT-4o from about 80% to 95%, and my classifier trained on 42,404 past codes reached 97.4%.
+- **The model and the setup.** Small open models did worst in the German study, but a 2024 8B model with a careful codebook reached the level of the best 2023 cloud model in Mellon et al. on the same question (95.9% against 93.9%, on different samples). Examples matter less as models and definitions improve: in the German study they lifted the 3B model from 58% to 74% but the 12B model only from 74% to 77%, and here they made no difference (prompt comparison). Training on past codes helped most: fine-tuning took GPT-4o from about 80% to 95%, and my classifier trained on 40,956 past codes reached 97.4%.
 - **The reference.** Human codes are not perfect. A second human coder matched the BES on 94.7% of answers, and in my blind review only 12 of Llama's 30 "mistakes" were clearly its own. Near 95%, accuracy measures agreement with one coder as much as quality.
 - **How well the categories are separated matters more than how many there are.** Llama was no worse with 50 categories than with 12 (95.9% against 95.4%), because its 12-category mistakes cluster in broad, overlapping groups.
 
@@ -255,12 +255,13 @@ ai-survey-coding-eval/
 
 ## Lessons learned
 
-- **Keep a test set you only touch once.** On the dev set, Llama tied the classifier. On the untouched test set, the classifier was ahead on 12 categories. I had refined the codebook while reading dev mistakes, and that flattered Llama.
+- **Keep a test set you only touch once.** On the dev set, Llama was level with the classifier. On the untouched test set, the classifier was ahead on 12 categories. I had refined the codebook while reading dev mistakes, and that flattered Llama.
 - **Check who made your labels.** Recent BES codes were produced by GPT-4o, so using them as ground truth would have been circular.
 - **Accuracy hides imbalance.** "Always Economy" scores 59%. Macro-F1 and κ show it up.
-- **Separate seen answers from new ones.** 89% of test answers repeat earlier wording. The classifier was 98–99% accurate on those, but 77–81% on new wording.
+- **Separate seen answers from new ones.** 89% of test answers repeat earlier wording. The classifier was 98–99% accurate on those, but 75–81% on new wording.
 - **Disagreement is a better warning sign than self-reported confidence.** Llama almost never said it was unsure. But the 5% of answers where it and the classifier disagreed held 69–84% of its mistakes.
 - **Trust the data over the documentation.** The codebook's 50→12 table leaves out three categories, and three label spellings differ from the data. I verified everything against the data itself (D-008).
+- **A comment is not code.** D-010 said evaluation respondents were left out of the classifier's training data, but the code only had a comment saying so. Restructuring the code into a tested package (D-026) exposed it. The fix removed 1,448 answers from 997 respondents and moved the classifier's test accuracy by at most 0.2 points (D-027).
 - **Silent updates can break a long run.** Ollama updated itself between my dev and test runs, and the new version crashed on the laptop's old graphics chip. A script that changed one setting at a time found the cause. I switched to the CPU only, and checked on 10 dev answers that the codes didn't change (D-017).
 - **Engineering details decide feasibility.** Reusing the cached codebook cut each local call from minutes to seconds.
 
@@ -283,6 +284,7 @@ Every decision is recorded in [`docs/decision_log.md`](docs/decision_log.md). Th
 - **D-013:** codebooks frozen before the test run.
 - **D-014:** the second-opinion check.
 - **D-017:** the test run used the CPU only, after an Ollama update crashed on the graphics chip.
+- **D-027:** evaluation respondents left out of the classifier's training data (a bug fix, so the code matches D-010).
 
 ## How this was built
 
