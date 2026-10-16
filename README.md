@@ -6,6 +6,8 @@
 
 > **Status:** complete. The final results come from a single run on 1,200 test answers that stayed untouched until the codebooks and prompt were frozen.
 
+> **Short on time?** The one-page [decision memo](docs/decision_memo.md) gives the recommendation, the options and the risks.
+
 ## At a glance
 
 **The question.** Survey teams pay people to read and code thousands of open-ended answers. Can a small open-weight model, running entirely on a laptop, code them as well as trained human coders, using no training data and only a written codebook?
