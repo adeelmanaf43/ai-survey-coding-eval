@@ -24,7 +24,7 @@
 
 - **You have thousands of past human codes for the same question?** Train a simple classifier. It is fast, cheap and hard to beat on answers that repeat.
 - **A new question, or no past codes?** A local LLM with a careful codebook got about 95% here with no training data, and the answers never leave your machine.
-- **You need near-human quality at low cost?** Run both, and have a person check only the ~5% of answers where they disagree.
+- **You need near-human quality at low cost?** Run both, and have a trained coder check only the ~5% of answers where they disagree.
 - **Writing a codebook for an LLM?** Put the effort into clear definitions. Here, adding example answers made no measurable difference.
 
 ## Why this matters
@@ -280,7 +280,7 @@ ai-survey-coding-eval/
 
    Unzip both into `data/raw/`. The code expects `BES2024_W30Strings_v30.1.sav` and `BES2024_W31_Panel_v31.05.sav`. If your versions differ, change the paths in `config.toml` and at the top of the tools in `scripts/`.
 
-2. **Set up Python.**
+2. 2. **Set up Python** (3.11 or newer; the results were made with 3.13)
    ```bash
    python -m venv .venv
    .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate

@@ -1,7 +1,10 @@
-pandas
-pyreadstat
-scikit-learn
-requests
-matplotlib
-pytest
+# Exact versions used for the committed results (Python 3.13, Windows).
+# Newer versions may work, but could change the numbers or the chart.
+pandas==3.0.6
+numpy==2.5.3
+scikit-learn==1.9.1
+pyreadstat==1.3.6
+requests==2.34.2
+matplotlib==3.11.2
+pytest==9.1.1
 tomli; python_version < "3.11"
