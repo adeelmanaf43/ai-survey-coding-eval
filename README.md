@@ -280,7 +280,7 @@ ai-survey-coding-eval/
 
    Unzip both into `data/raw/`. The code expects `BES2024_W30Strings_v30.1.sav` and `BES2024_W31_Panel_v31.05.sav`. If your versions differ, change the paths in `config.toml` and at the top of the tools in `scripts/`.
 
-2. 2. **Set up Python** (3.11 or newer; the results were made with 3.13)
+2. **Set up Python** (3.11 or newer; the results were made with 3.13)
    ```bash
    python -m venv .venv
    .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
