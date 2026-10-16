@@ -112,6 +112,21 @@ flowchart LR
 - The mistakes both methods share (9 and 15 answers) never reach a person. Some of them may be debatable human codes.
 - On the dev set, the same check gave 99.3% for both schemes, so the result held up on new data.
 
+## Human benchmark: me against Llama on 100 answers
+
+I coded a random 100 of the 1,200 test answers myself, with the same 12-category codebook and rules Llama got. I saw only the answer text, never the BES code or a model's code, and each answer was timed (D-018).
+
+| 100 test answers, 12 categories | Same code as the BES coders | 95% interval | Cohen's κ |
+| ------------------------------- | --------------------------- | ------------ | --------- |
+| Me, with the codebook only      | 83%                         | 75–90%       | 0.73      |
+| Llama 3.1 8B                    | 96%                         | 92–99%       | 0.94      |
+| TF-IDF classifier               | 96%                         | 92–99%       | 0.94      |
+
+- **Llama matched the BES coders more often than I did:** by 13 points (95% interval 7 to 20 points), so not by chance. But I am not a trained BES coder: I had the codebook and no practice. This shows that a codebook alone does not make an untrained person as consistent as the BES coders. It says nothing about trained coders, who agree with each other on about 95% of answers (Mellon et al., 2024).
+- **Most of my differences were about "Negativity".** 7 of my 17 differences were answers the BES coded as Negativity (negative about politics or politicians in general) that I put under Other, Other lib-auth or Economy. A trained coder learns where that boundary sits; the definition alone did not teach me.
+- **Speed:** I took 13 minutes for the 100 answers, a median of 2 seconds but a mean of 8, because a few hard answers took much longer. At that pace, 1,000 answers take about 2.2 hours, the figure the cost estimate uses (D-019).
+- **A caution for the second opinion.** The 99% above assumes the person checking a disagreement always gives the BES code. I matched the BES coders on only 83% of answers, and disagreements are the harder ones, so an untrained checker would fall short of that best case. The check should be done by trained coders.
+
 ## Development set (300 answers)
 
 | Scheme        | Method                       | Training data        | Accuracy | Macro-F1 | Cohen's κ | Accuracy on new answers\* |
