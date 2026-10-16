@@ -74,6 +74,7 @@ flowchart LR
    - Cohen's κ: agreement beyond chance.
    - Accuracy split by whether an answer's exact text already appears in the training waves (**seen**) or not (**new**).
    - McNemar's exact test, to check whether a difference between the two methods could be chance.
+   - 95% bootstrap intervals for every metric, from 1,000 resamples of the test answers (D-020).
 
 ## Final results: test set (1,200 answers, run once)
 
@@ -87,6 +88,19 @@ flowchart LR
 |               | Llama 3.1 8B, codebook only  | none                 | 95.9%    | 73.8%    | 0.95      | 82.7%                     |
 
 \* 133 of the 1,200 test answers (11%) use wording that does not appear in waves 23–24. Each overall accuracy is uncertain by about ±1 percentage point (95% interval). With only 133 new answers, the new-answer figures are uncertain by about ±7 points.
+
+**How certain are these numbers?** 95% intervals from 1,000 bootstrap resamples of the test answers (D-020):
+
+| Scheme        | Method            | Accuracy          | Macro-F1          | Cohen's κ        |
+| ------------- | ----------------- | ----------------- | ----------------- | ---------------- |
+| 12 categories | TF-IDF classifier | 97.4% (96.5–98.2) | 83.8% (74.6–89.3) | 0.96 (0.94–0.97) |
+|               | Llama 3.1 8B      | 95.4% (94.2–96.6) | 78.3% (68.2–84.6) | 0.93 (0.91–0.94) |
+| 50 categories | TF-IDF classifier | 95.8% (94.7–96.9) | 73.0% (67.9–81.8) | 0.95 (0.94–0.96) |
+|               | Llama 3.1 8B      | 95.9% (94.8–96.9) | 73.8% (65.9–78.1) | 0.95 (0.94–0.96) |
+
+- **Classifier minus Llama, accuracy:** +2.0 points on 12 categories (95% interval +0.8 to +3.3) and −0.1 on 50 (−1.3 to +1.2). The first interval excludes zero, so the classifier's lead is real. The second includes zero, so 50 categories is a tie, as McNemar's test also shows.
+- The gap is computed on the same resampled answers for both methods, which makes it more precise than the two separate intervals suggest.
+- **Macro-F1 is much less certain than accuracy**, because the rarest categories have only 1–12 test answers each. One answer more or less in such a category moves macro-F1 by several points. Compare methods on accuracy and κ; read macro-F1 as "both are weak on rare categories".
 
 **What the test results show**
 
