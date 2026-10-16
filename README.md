@@ -214,6 +214,17 @@ Studies of AI coding of open-ended answers range from "close to a human" to "use
 
 **The lesson:** a single number, whether "95% accurate" or "29% matched", means little without the question, the number of codes per answer, the metric and the reference. Test an AI coder on your own data, with a held-out test set, before trusting it.
 
+## Limitations
+
+- **One question, one wave.** "Most important issue" answers are short and repetitive (59% are about the economy). Longer or more varied open-ended questions are likely to be harder for both methods.
+- **One reference coder.** Each answer has one BES code, and trained coders agree with each other on only about 95% of answers. Near that level, accuracy measures agreement with one coder as much as quality, and the blind review found many of Llama's "mistakes" debatable.
+- **One model, one setup.** Llama 3.1 8B, one prompt, temperature 0, one run. Other models or prompt wordings could do better or worse (Baumann et al., 2025).
+- **The codebook was refined on dev answers.** Its examples are paraphrased from dev answers, which is why dev results flattered Llama. The test set was untouched until the final run.
+- **The test set has now been used.** Once for the final run, and once more to re-run the classifier after a bug fix (D-027). Any further tuning needs a fresh, human-coded wave.
+- **Small human benchmark.** One untrained coder (me) on 100 answers, so it shows the codebook's limits for a newcomer, not the level of trained coders.
+- **Best-case second opinion and rough costs.** The 99% assumes the checker always gives the BES code; the costs assume £15 an hour and my coding pace.
+- **Rare categories.** Several categories have fewer than 15 test answers, so their F1 scores, and macro-F1, are very uncertain.
+
 ## Privacy and data handling
 
 - **Local inference only:** every coding run uses Ollama on my own machine. No survey answers are sent to cloud AI APIs for coding.
