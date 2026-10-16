@@ -23,7 +23,6 @@
 - **You have thousands of past human codes for the same question?** Train a simple classifier. It is fast, cheap and hard to beat on answers that repeat.
 - **A new question, or no past codes?** A local LLM with a careful codebook got about 95% here with no training data, and the answers never leave your machine.
 - **You need near-human quality at low cost?** Run both, and have a person check only the ~5% of answers where they disagree.
-- **You need near-human quality at low cost?** Run both, and have a person check only the ~5% of answers where they disagree.
 - **Writing a codebook for an LLM?** Put the effort into clear definitions. Here, adding example answers made no measurable difference.
 
 ## Why this matters
@@ -140,6 +139,28 @@ I coded a random 100 of the 1,200 test answers myself, with the same 12-category
 - **Most of my differences were about "Negativity".** 7 of my 17 differences were answers the BES coded as Negativity (negative about politics or politicians in general) that I put under Other, Other lib-auth or Economy. A trained coder learns where that boundary sits; the definition alone did not teach me.
 - **Speed:** I took 13 minutes for the 100 answers, a median of 2 seconds but a mean of 8, because a few hard answers took much longer. At that pace, 1,000 answers take about 2.2 hours, the figure the cost estimate uses (D-019).
 - **A caution for the second opinion.** The 99% above assumes the person checking a disagreement always gives the BES code. I matched the BES coders on only 83% of answers, and disagreements are the harder ones, so an untrained checker would fall short of that best case. The check should be done by trained coders.
+
+## Review rule: how much checking buys how much accuracy
+
+![Accuracy of the answers left to the machine as a person checks more of them](results/review_rule.png)
+
+The second opinion above is one point on a curve. Here a person checks answers riskiest first: the answers where Llama and the classifier disagree, then the rest from the least to the most confident classifier code (D-021).
+
+- **The first 5% does almost all the work.** Checking the 63 disagreements (5.2% of answers) raises the 12-category answers left to the machine from 95.4% to 99.2%. Checking twice as many adds less than half a point more (99.6% at 10%). On 50 categories: 95.9% to 98.7% at 5.2%, and 99.3% at 10%.
+
+| Per 1,000 answers                                                    | Human time | Cost at £15/h | Laptop time       |
+| -------------------------------------------------------------------- | ---------- | ------------- | ----------------- |
+| All coded by hand (my pace, 8.1 s per answer)                        | 2.2 h      | about £34     | –                 |
+| Llama + classifier, a person checks the disagreements, 12 categories | 7–21 min   | about £2–5    | 1.6 h, unattended |
+| The same, 50 categories                                              | 7–21 min   | about £2–5    | 2.2 h, unattended |
+
+Assumptions, all in `config.toml`:
+
+- £15 an hour for a coder.
+- Checking a disagreement takes 1 to 3 times an average answer, because disagreements are the hard ones; hence the range.
+- "My pace" is an untrained coder's mean time (D-019). A trained coder may well be faster.
+- Laptop time leaves out one answer recorded while the laptop was asleep (D-022).
+- The checker always gives the BES code (best case). My own 83% in the human benchmark shows a real checker will fall short of that.
 
 ## Development set (300 answers)
 
