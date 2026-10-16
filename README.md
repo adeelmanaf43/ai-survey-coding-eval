@@ -12,9 +12,11 @@
 
 **The answer** (test set: 1,200 answers from May 2023):
 
-- **Close, with no training data at all.** Given only a codebook, Llama 3.1 8B gave the same code as the BES's human coders for 95.4% of answers on 12 categories and 95.9% on 50 (Cohen's κ 0.93–0.95).
-- **A simple classifier trained on 40,956 past human codes did as well or better:** 97.4% and 95.8%. Its lead comes from answers it had effectively seen before: 89% of test answers repeat earlier wording word for word. On new wording, the two were level on 12 categories, and Llama was ahead on 50, though with only 133 new answers that gap could be chance.
-- **Together, with a quick human check, they beat either one.** The two methods agree on 95% of answers, and those agreed codes are 98.7–99.2% correct. If a person checks only the other 5%, accuracy rises to about 99% (best case).
+- **Close, with no training data at all.** Given only a codebook, Llama 3.1 8B gave the same code as the BES's human coders for 95.4% of answers on 12 categories and 95.9% on 50 (Cohen's κ 0.93–0.95). Two trained coders agree on about 95% (Mellon et al., 2024).
+- **A simple classifier trained on 40,956 past human codes was ahead on 12 categories and level on 50:** 97.4% and 95.8% (12 categories: +2.0 points, 95% interval +0.8 to +3.3). Its strength is wording that many other people used before: 89% of test answers repeat earlier answers word for word. On new wording, the two were level on 12 categories, and Llama was ahead on 50, though with only 133 new answers that gap could be chance.
+- **Most of Llama's "mistakes" are judgment calls.** In a blind review of 30, I sided with Llama's code as often as with the BES coder's (13 and 12 times), and judged both fine 5 times.
+- **An untrained person with the same codebook did worse.** I coded 100 of the test answers myself and matched the BES coders on 83%; Llama matched them on 96% of the same answers.
+- **Together, with a quick human check, they beat either one.** The two methods agree on 95% of answers, and those agreed codes are 98.7–99.2% correct. If a person checks only the other 5%, accuracy rises to about 99% (best case), for about 7–21 minutes of human time per 1,000 answers instead of 2.2 hours by hand.
 - **The development set flattered Llama.** On the 300 dev answers I used to refine the codebook, Llama was level with the classifier. The untouched test set gave the honest answer.
 - **It all ran locally** on a 16 GB laptop: about 6–8 seconds per answer, no API costs, and 0 invalid replies in 3,000 calls. No survey answers went to cloud AI services for coding.
 
